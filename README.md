@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glacier Kumu | 3D Portfolio</title>
+    <title>Glacier Kumu | 3D Cockatiel Portfolio</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,6 @@
             --pastel-blue: #a8d8ea;
             --pastel-pink: #faccff;
             --pastel-soft-pink: #ffd3e2;
-            --pastel-purple: #e0c3fc;
             --pastel-bg-1: #eaf6ff;
             --pastel-bg-2: #ffeaf2;
             --text-main: #4a4e69;
@@ -63,7 +62,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            pointer-events: none; /* เพื่อให้สามารถลากเมาส์หมุนฉาก 3D ในส่วนว่างได้ */
+            pointer-events: none;
         }
 
         /* Card นำเสนอผลงาน (Glassmorphism) */
@@ -74,8 +73,8 @@
             -webkit-backdrop-filter: blur(16px);
             border: 2px solid var(--glass-border);
             border-radius: 32px;
-            padding: 40px 35px;
-            max-width: 460px;
+            padding: 35px 30px;
+            max-width: 440px;
             width: 100%;
             text-align: center;
             box-shadow: 0 20px 40px var(--shadow), 0 10px 20px rgba(255, 204, 255, 0.3);
@@ -84,90 +83,90 @@
         }
 
         .portfolio-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             box-shadow: 0 25px 50px rgba(250, 204, 255, 0.6);
         }
 
         /* ไอคอนโปรไฟล์ */
         .profile-avatar {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
             border-radius: 50%;
             background: linear-gradient(135deg, #a8d8ea, #ffd3e2);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             border: 4px solid #ffffff;
             box-shadow: 0 8px 20px rgba(168, 216, 234, 0.5);
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: #3d3b62;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .pen-name {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             background: linear-gradient(45deg, #7b2cbf, #ff85a1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             letter-spacing: 0.5px;
         }
 
         .tag {
             display: inline-block;
             background: rgba(255, 255, 255, 0.85);
-            padding: 6px 18px;
+            padding: 5px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-sub);
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(168, 216, 234, 0.3);
         }
 
         .bio {
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
             color: #5c5d75;
-            margin-bottom: 28px;
+            margin-bottom: 22px;
         }
 
         /* Contact Link Buttons */
         .social-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #8e8aa8;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
         .social-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 12px 16px;
-            border-radius: 16px;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 14px;
             background: #ffffff;
             color: #4a4e69;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.8);
@@ -175,8 +174,7 @@
         }
 
         .social-btn i {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
+            font-size: 1.1rem;
         }
 
         /* Hover Colors แยกตาม Social Media */
@@ -208,7 +206,6 @@
             transform: translateY(-3px) scale(1.03);
         }
 
-        /* Keyframes Animation */
         @keyframes floatUp {
             from {
                 opacity: 0;
@@ -220,16 +217,15 @@
             }
         }
 
-        /* Mobile Responsive */
         @media (max-width: 480px) {
             .portfolio-card {
-                padding: 30px 20px;
+                padding: 25px 18px;
             }
             .social-grid {
                 grid-template-columns: 1fr;
             }
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -243,23 +239,20 @@
     <div class="ui-wrapper">
         <div class="portfolio-card">
             
-            <!-- Avatar Icon -->
             <div class="profile-avatar">
-                <i class="fa-solid fa-palette"></i>
+                <i class="fa-solid fa-feather-pointed"></i>
             </div>
 
-            <!-- Profile Info -->
             <h1>Jaranya Tosanhuan</h1>
             <div class="pen-name">Glacier Kumu</div>
-            <div class="tag">Artist & Creator</div>
+            <div class="tag">Character Design & Concept Art</div>
 
             <p class="bio">
-                ✨ I love Character Design and Concept art. <br>
-                สร้างสรรค์ผลงานตัวละครและภาพคอนเซปต์ในโลกจินตนาการ
+                I love Character Design and Concept art. ✨<br>
+                ยินดีต้อนรับสู่พื้นที่สร้างสรรค์ผลงานภาพวาดและตัวละคร
             </p>
 
-            <!-- Social Contacts Grid -->
-            <div class="social-title">Connect with me</div>
+            <div class="social-title">Contact & Follow Me</div>
             <div class="social-grid">
                 <a href="https://www.facebook.com/glacier.kumu/" target="_blank" rel="noopener noreferrer" class="social-btn fb">
                     <i class="fa-brands fa-facebook"></i>
@@ -288,17 +281,15 @@
     <!-- Import Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- 3D Scene Script -->
     <script>
         // 1. Setup Scene, Camera, Renderer
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
 
-        // เพิ่ม Fog แบบจางๆ ในฉากหลังให้รู้สึกนุ่มนวล
         scene.fog = new THREE.FogExp2(0xeaf6ff, 0.012);
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 30;
+        camera.position.set(0, 2, 22);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -306,69 +297,153 @@
         container.appendChild(renderer.domElement);
 
         // 2. Lighting (จัดแสงโทนพาสเทล ฟ้า-ชมพู)
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
         scene.add(ambientLight);
 
-        // แสงสีฟ้าพาสเทลจากมุมซ้ายบน
         const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.2);
         blueLight.position.set(-10, 15, 10);
         scene.add(blueLight);
 
-        // แสงสีชมพูพาสเทลจากมุมขวาล่าง
         const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.2);
         pinkLight.position.set(10, -15, 10);
         scene.add(pinkLight);
 
-        // 3. Create 3D Floating Objects
-        const shapes = [];
-        const pastelColors = [0xa8d8ea, 0xfaccff, 0xffd3e2, 0xe0c3fc, 0xc4faf8];
+        // 3. Create Pastel Cockatiel (สร้างโมเดลนกคอกคาเทล 3D)
+        const cockatielGroup = new THREE.Group();
 
-        // รูปทรงเรขาคณิตแบบผสมผสาน
+        // วัสดุโทนสีพาสเทล
+        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff5e1, flatShading: true }); // ตัวสีครีมพาสเทล
+        const yellowMat = new THREE.MeshPhongMaterial({ color: 0xffea85, flatShading: true }); // หัว/หงอนสีเหลือง
+        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xffa3a5, flatShading: true }); // แก้มส้มพาสเทล
+        const beakMat = new THREE.MeshPhongMaterial({ color: 0xe0c3fc, flatShading: true }); // ปากสีม่วงพาสเทลอ่อน
+        const eyeMat = new THREE.MeshPhongMaterial({ color: 0x4a4e69 }); // ตา
+        const wingMat = new THREE.MeshPhongMaterial({ color: 0xa8d8ea, flatShading: true }); // ปีกสีฟ้าพาสเทล
+        const tailMat = new THREE.MeshPhongMaterial({ color: 0xfaccff, flatShading: true }); // หางสีชมพูพาสเทล
+
+        // Body (ลำตัว)
+        const bodyGeom = new THREE.SphereGeometry(2, 16, 16);
+        bodyGeom.scale(1, 1.3, 0.9);
+        const body = new THREE.Mesh(bodyGeom, bodyMat);
+        cockatielGroup.add(body);
+
+        // Head (หัว)
+        const headGeom = new THREE.SphereGeometry(1.4, 16, 16);
+        const head = new THREE.Mesh(headGeom, yellowMat);
+        head.position.set(0, 2.2, 0.3);
+        cockatielGroup.add(head);
+
+        // Beak (ปาก)
+        const beakGeom = new THREE.ConeGeometry(0.4, 0.8, 4);
+        const beak = new THREE.Mesh(beakGeom, beakMat);
+        beak.position.set(0, 2.0, 1.6);
+        beak.rotation.x = Math.PI / 3;
+        cockatielGroup.add(beak);
+
+        // Crest / Feathers on Head (หงอนเอกลักษณ์ของคอกคาเทล)
+        for (let i = 0; i < 3; i++) {
+            const crestGeom = new THREE.ConeGeometry(0.18, 1.5 - i * 0.2, 4);
+            const crest = new THREE.Mesh(crestGeom, yellowMat);
+            crest.position.set(0, 3.5 + i * 0.2, 0.1 - i * 0.2);
+            crest.rotation.x = -0.2 - i * 0.15;
+            cockatielGroup.add(crest);
+        }
+
+        // Cheeks (แก้มส้มป๊อก)
+        const cheekGeom = new THREE.CylinderGeometry(0.45, 0.45, 0.1, 12);
+        const leftCheek = new THREE.Mesh(cheekGeom, cheekMat);
+        leftCheek.position.set(-1.1, 2.0, 1.0);
+        leftCheek.rotation.z = Math.PI / 2;
+        leftCheek.rotation.y = -Math.PI / 6;
+
+        const rightCheek = leftCheek.clone();
+        rightCheek.position.set(1.1, 2.0, 1.0);
+        rightCheek.rotation.y = Math.PI / 6;
+
+        cockatielGroup.add(leftCheek);
+        cockatielGroup.add(rightCheek);
+
+        // Eyes (ดวงตา)
+        const eyeGeom = new THREE.SphereGeometry(0.18, 8, 8);
+        const leftEye = new THREE.Mesh(eyeGeom, eyeMat);
+        leftEye.position.set(-0.85, 2.3, 1.2);
+
+        const rightEye = leftEye.clone();
+        rightEye.position.set(0.85, 2.3, 1.2);
+
+        cockatielGroup.add(leftEye);
+        cockatielGroup.add(rightEye);
+
+        // Wings (ปีกซ้าย-ขวา)
+        const wingGeom = new THREE.ConeGeometry(1.2, 3.5, 4);
+        
+        // Left Wing Pivot
+        const leftWingPivot = new THREE.Group();
+        leftWingPivot.position.set(-1.8, 0.8, 0);
+        const leftWing = new THREE.Mesh(wingGeom, wingMat);
+        leftWing.position.set(-0.3, -1.2, 0);
+        leftWing.rotation.z = 0.3;
+        leftWingPivot.add(leftWing);
+        cockatielGroup.add(leftWingPivot);
+
+        // Right Wing Pivot
+        const rightWingPivot = new THREE.Group();
+        rightWingPivot.position.set(1.8, 0.8, 0);
+        const rightWing = new THREE.Mesh(wingGeom, wingMat);
+        rightWing.position.set(0.3, -1.2, 0);
+        rightWing.rotation.z = -0.3;
+        rightWingPivot.add(rightWing);
+        cockatielGroup.add(rightWingPivot);
+
+        // Tail (หงอนหาง)
+        const tailGeom = new THREE.BoxGeometry(0.8, 3.5, 0.1);
+        const tail = new THREE.Mesh(tailGeom, tailMat);
+        tail.position.set(0, -2.2, -1.0);
+        tail.rotation.x = -Math.PI / 6;
+        cockatielGroup.add(tail);
+
+        // ปรับตำแหน่งนกให้ลอยเด่นในฉาก
+        cockatielGroup.position.set(0, 0, -2);
+        cockatielGroup.scale.set(1.6, 1.6, 1.6);
+        scene.add(cockatielGroup);
+
+        // 4. Floating Pastel Shapes ในฉากหลัง
+        const backgroundShapes = [];
+        const pastelColors = [0xa8d8ea, 0xfaccff, 0xffd3e2, 0xe0c3fc, 0xc4faf8];
         const geometries = [
-            new THREE.IcosahedronGeometry(1.2, 0),
-            new THREE.TorusGeometry(1, 0.4, 16, 50),
-            new THREE.OctahedronGeometry(1.3, 0),
-            new THREE.SphereGeometry(1, 32, 32),
-            new THREE.DodecahedronGeometry(1.1, 0)
+            new THREE.IcosahedronGeometry(1, 0),
+            new THREE.TorusGeometry(0.8, 0.3, 16, 30),
+            new THREE.SphereGeometry(0.8, 16, 16)
         ];
 
-        // สร้างวัตถุ 3D จำนวน 45 ชิ้นกระจายทั่วหน้าจอ
-        for (let i = 0; i < 45; i++) {
+        for (let i = 0; i < 35; i++) {
             const geom = geometries[Math.floor(Math.random() * geometries.length)];
-            const color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+            const col = pastelColors[Math.floor(Math.random() * pastelColors.length)];
 
-            const material = new THREE.MeshPhongMaterial({
-                color: color,
-                shininess: 80,
+            const mat = new THREE.MeshPhongMaterial({
+                color: col,
+                shininess: 60,
                 flatShading: true,
                 transparent: true,
-                opacity: 0.85
+                opacity: 0.7
             });
 
-            const mesh = new THREE.Mesh(geom, material);
+            const mesh = new THREE.Mesh(geom, mat);
+            mesh.position.x = (Math.random() - 0.5) * 50;
+            mesh.position.y = (Math.random() - 0.5) * 50;
+            mesh.position.z = (Math.random() - 0.5) * 30 - 10;
 
-            // สุ่มตำแหน่ง X, Y, Z
-            mesh.position.x = (Math.random() - 0.5) * 55;
-            mesh.position.y = (Math.random() - 0.5) * 55;
-            mesh.position.z = (Math.random() - 0.5) * 35 - 5;
-
-            // สุ่มมุมหมุนเริ่มต้น
-            mesh.rotation.x = Math.random() * Math.PI;
-            mesh.rotation.y = Math.random() * Math.PI;
-
-            // เก็บค่าความเร็วสำหรับการเคลื่อนไหว
             mesh.userData = {
-                rotSpeedX: (Math.random() - 0.5) * 0.012,
-                rotSpeedY: (Math.random() - 0.5) * 0.012,
+                rotSpeedX: (Math.random() - 0.5) * 0.01,
+                rotSpeedY: (Math.random() - 0.5) * 0.01,
                 floatSpeed: Math.random() * 0.015 + 0.005,
                 floatOffset: Math.random() * Math.PI * 2
             };
 
             scene.add(mesh);
-            shapes.push(mesh);
+            backgroundShapes.push(mesh);
         }
 
-        // 4. Interactive Mouse Parallax Effect
+        // 5. Mouse Parallax Movement
         let mouseX = 0;
         let mouseY = 0;
 
@@ -377,33 +452,39 @@
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // 5. Animation Loop
+        // 6. Animation Loop
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
             const elapsedTime = clock.getElapsedTime();
 
-            // หมุนและลอยวัตถุแต่ละชิ้น
-            shapes.forEach(shape => {
+            // Cockatiel Floating & Wing Flapping Animation
+            cockatielGroup.position.y = Math.sin(elapsedTime * 2) * 0.5;
+            cockatielGroup.rotation.y = Math.sin(elapsedTime * 0.8) * 0.3;
+
+            // Wing Flapping (ขยับปีกนกนุ่มนวล)
+            leftWingPivot.rotation.z = Math.sin(elapsedTime * 4) * 0.2;
+            rightWingPivot.rotation.z = -Math.sin(elapsedTime * 4) * 0.2;
+
+            // Background Floating Shapes Animation
+            backgroundShapes.forEach(shape => {
                 shape.rotation.x += shape.userData.rotSpeedX;
                 shape.rotation.y += shape.userData.rotSpeedY;
-
-                // ให้ลอยขึ้น-ลงนุ่มนวลแบบ Sine Wave
-                shape.position.y += Math.sin(elapsedTime * 1.5 + shape.userData.floatOffset) * 0.015;
+                shape.position.y += Math.sin(elapsedTime * 1.5 + shape.userData.floatOffset) * 0.012;
             });
 
-            // ปรับมุมกล้องให้ขยับตามเมาส์นุ่มนวล (Parallax)
-            camera.position.x += (mouseX * 4 - camera.position.x) * 0.04;
-            camera.position.y += (-mouseY * 4 - camera.position.y) * 0.04;
-            camera.lookAt(scene.position);
+            // Parallax Camera Motion
+            camera.position.x += (mouseX * 3 - camera.position.x) * 0.04;
+            camera.position.y += (-mouseY * 3 + 2 - camera.position.y) * 0.04;
+            camera.lookAt(0, 0, 0);
 
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // 6. Handle Window Resize
+        // 7. Handle Window Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
