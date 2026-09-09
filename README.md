@@ -3,43 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glacier Kumu | 3D Portfolio</title>
-    <!-- Google Fonts -->
+    <title>Glacier Kumu | 3D Interactive Portfolio</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
             --pastel-blue: #a8d8ea;
             --pastel-pink: #faccff;
-            --pastel-soft-pink: #ffd3e2;
-            --pastel-bg-1: #eaf6ff;
-            --pastel-bg-2: #ffeaf2;
-            --text-main: #4a4e69;
-            --text-sub: #6c5ce7;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.85);
-            --shadow: rgba(168, 216, 234, 0.35);
+            --pastel-purple: #c4faf8;
+            --pastel-accent: #7b2cbf;
+            --text-dark: #2b2d42;
+            --text-muted: #6c757d;
+            --glass-card: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 20px 50px rgba(168, 216, 234, 0.4);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', 'Kanit', sans-serif;
+            font-family: 'Outfit', 'Kanit', sans-serif;
+            user-select: none;
         }
 
         body {
-            overflow-x: hidden;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--pastel-bg-1) 0%, var(--pastel-bg-2) 100%);
-            color: var(--text-main);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #eaf6ff 0%, #ffeaf2 50%, #f3e8ff 100%);
+            color: var(--text-dark);
         }
 
-        /* 3D Canvas Background */
+        /* Three.js Canvas Container */
         #webgl-container {
             position: fixed;
             top: 0;
@@ -49,449 +50,626 @@
             z-index: 1;
         }
 
-        /* UI Overlay Wrapper */
-        .ui-container {
+        /* Overlay UI Container */
+        .ui-layout {
             position: relative;
             z-index: 2;
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 20px;
+            padding: 30px;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Sidebar (Profile Card) */
+        .sidebar {
+            pointer-events: auto;
+            background: var(--glass-card);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 2px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 35px 25px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
+            justify-content: space-between;
+            box-shadow: var(--glass-shadow);
+            animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Glassmorphism Card Container */
-        .portfolio-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 40px;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 20px 40px var(--shadow);
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Header Info Section */
-        .header-section {
+        .profile-header {
             text-align: center;
-            margin-bottom: 25px;
         }
 
-        .avatar-box {
-            width: 90px;
-            height: 90px;
+        .profile-badge {
+            width: 80px;
+            height: 80px;
             margin: 0 auto 15px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-soft-pink));
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-pink));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 2.2rem;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 20px var(--shadow);
+            font-size: 2rem;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(250, 204, 255, 0.6);
+            border: 3px solid #fff;
         }
 
         h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #3d3b62;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
         }
 
         .pen-name {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             background: linear-gradient(45deg, #7b2cbf, #ff85a1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .bio-tag {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 6px 18px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: var(--text-sub);
-            border: 1px solid rgba(168, 216, 234, 0.4);
+            color: #5a5a7a;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 15px;
+        }
+
+        .bio-desc {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
         /* Navigation Tabs */
-        .tabs-nav {
+        .nav-tabs {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 10px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 6px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .tab-btn {
             border: none;
-            background: transparent;
-            padding: 10px 20px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 14px 20px;
+            border-radius: 18px;
             font-size: 0.9rem;
             font-weight: 600;
-            color: #5a5a7a;
+            color: var(--text-dark);
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+            color: var(--pastel-accent);
         }
 
         .tab-btn:hover {
-            color: #7b2cbf;
-            background: rgba(255, 255, 255, 0.6);
+            background: #ffffff;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(168, 216, 234, 0.4);
         }
 
         .tab-btn.active {
             background: #ffffff;
-            color: #7b2cbf;
-            box-shadow: 0 4px 12px rgba(123, 44, 191, 0.15);
+            border-color: var(--pastel-pink);
+            box-shadow: 0 10px 25px rgba(250, 204, 255, 0.5);
+            transform: translateX(8px);
         }
 
-        /* Tab Content Section */
-        .tab-content {
-            display: none;
-            animation: fadeInTab 0.4s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* About & Contact Tab */
-        .about-text {
-            text-align: center;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #555577;
+        /* Contact Social Grid */
+        .social-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8a8aa0;
+            margin-bottom: 10px;
         }
 
         .social-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
 
-        .social-btn {
+        .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            border-radius: 16px;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 12px;
             background: #ffffff;
-            color: var(--text-main);
+            color: var(--text-dark);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
         }
 
-        .social-btn:hover {
-            transform: translateY(-3px);
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.02);
             color: #fff;
         }
 
-        .social-btn.fb:hover { background: #1877f2; box-shadow: 0 8px 16px rgba(24, 119, 242, 0.3); }
-        .social-btn.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); box-shadow: 0 8px 16px rgba(220, 39, 67, 0.3); }
-        .social-btn.x:hover { background: #000; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); }
-        .social-btn.tiktok:hover { background: #000; color: #00f2fe; box-shadow: 0 8px 16px rgba(0, 242, 254, 0.3); }
+        .social-link.fb:hover { background: #1877f2; }
+        .social-link.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .social-link.x:hover { background: #000; }
+        .social-link.tiktok:hover { background: #000; color: #00f2fe; }
 
-        /* Gallery Grid (Character Design & Concept Art) */
+        /* Main Content Showcase Display */
+        .main-content {
+            pointer-events: auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tab-pane {
+            display: none;
+            width: 100%;
+            height: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Custom Scrollbar */
+        .tab-pane::-webkit-scrollbar {
+            width: 6px;
+        }
+        .tab-pane::-webkit-scrollbar-thumb {
+            background: rgba(250, 204, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        /* Showcase Grid */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
         }
 
         .art-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 18px;
+            background: var(--glass-card);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
             overflow: hidden;
-            border: 1px solid #fff;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
         .art-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(168, 216, 234, 0.5);
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(168, 216, 234, 0.5);
+            border-color: #fff;
         }
 
-        .art-placeholder {
-            width: 100%;
-            height: 180px;
+        .art-thumb {
+            height: 200px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #8e8aa8;
-            font-size: 2rem;
-            gap: 8px;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
         }
 
-        .art-placeholder span {
-            font-size: 0.85rem;
-            font-weight: 500;
+        .art-card.char .art-thumb { background: linear-gradient(135deg, #a8d8ea, #faccff); }
+        .art-card.concept .art-thumb { background: linear-gradient(135deg, #ffd3e2, #c4faf8); }
+
+        .art-meta {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
         }
 
-        .art-card.char .art-placeholder { background: linear-gradient(135deg, #e0c3fc, #faccff); }
-        .art-card.concept .art-placeholder { background: linear-gradient(135deg, #a8d8ea, #c4faf8); }
-
-        .art-info {
-            padding: 12px;
-            text-align: center;
+        .art-meta h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
         }
 
-        .art-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #3d3b62;
+        .art-meta p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
         }
 
-        /* Animations */
+        /* Keyframe Animations */
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInTab {
-            from { opacity: 0; transform: scale(0.98); }
+            from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Responsive Layout */
-        @media (max-width: 600px) {
-            .portfolio-card { padding: 25px 20px; }
-            .social-grid { grid-template-columns: 1fr; }
-            .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .ui-layout {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+                height: auto;
+            }
+            body { overflow-y: auto; }
+            .sidebar { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Three.js Background Canvas -->
+    <!-- 3D Canvas Background -->
     <div id="webgl-container"></div>
 
-    <!-- Main UI Container -->
-    <div class="ui-container">
-        <div class="portfolio-card">
-            
-            <!-- Header Profile Section -->
-            <div class="header-section">
-                <div class="avatar-box">
-                    <i class="fa-solid fa-palette"></i>
+    <!-- UI Overlay -->
+    <div class="ui-layout">
+        
+        <!-- Sidebar Profile -->
+        <div class="sidebar">
+            <div>
+                <div class="profile-header">
+                    <div class="profile-badge">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h1>Jaranya Tosanhuan</h1>
+                    <div class="pen-name">Glacier Kumu</div>
+                    <div class="bio-tag">Character Design & Concept Art</div>
                 </div>
-                <h1>Jaranya Tosanhuan</h1>
-                <div class="pen-name">Glacier Kumu</div>
-                <div class="bio-tag">Character Design & Concept Art</div>
-            </div>
 
-            <!-- Navigation Tabs -->
-            <div class="tabs-nav">
-                <button class="tab-btn active" onclick="switchTab(event, 'about')">
-                    <i class="fa-solid fa-user"></i> About & Contact
-                </button>
-                <button class="tab-btn" onclick="switchTab(event, 'character')">
-                    <i class="fa-solid fa-paintbrush"></i> Character Design
-                </button>
-                <button class="tab-btn" onclick="switchTab(event, 'concept')">
-                    <i class="fa-solid fa-mountain-sun"></i> Concept Art
-                </button>
-            </div>
-
-            <!-- TAB 1: About & Contact -->
-            <div id="about" class="tab-content active">
-                <p class="about-text">
-                    ✨ I love Character Design and Concept art. <br>
-                    ยินดีต้อนรับสู่พอร์ตโฟลิโอ 3D สีพาสเทล สามารถคลิกเลือกชมผลงานและติดต่อได้ผ่านช่องทางด้านล่างนี้ครับ/ค่ะ
+                <p class="bio-desc">
+                    ✨ I love Character Design and Concept art.<br>
+                    ยินดีต้อนรับสู่โลกพาสเทล 3D มอนิเตอร์น้องนก Cockatiel ด้านหลังสามารถหันตามเมาส์ได้ครับ!
                 </p>
+
+                <!-- Tabs Navigation -->
+                <div class="nav-tabs">
+                    <button class="tab-btn active" onclick="switchTab('about', this)">
+                        <i class="fa-solid fa-heart"></i> About & Contact
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('character', this)">
+                        <i class="fa-solid fa-user-astronaut"></i> Character Design
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('concept', this)">
+                        <i class="fa-solid fa-paint-brush"></i> Concept Art
+                    </button>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div>
+                <div class="social-title">Social Contact</div>
                 <div class="social-grid">
-                    <a href="https://www.facebook.com/glacier.kumu/" target="_blank" rel="noopener noreferrer" class="social-btn fb">
+                    <a href="https://www.facebook.com/glacier.kumu/" target="_blank" rel="noopener noreferrer" class="social-link fb">
                         <i class="fa-brands fa-facebook"></i> Facebook
                     </a>
-                    <a href="https://www.instagram.com/kuximumu_" target="_blank" rel="noopener noreferrer" class="social-btn ig">
+                    <a href="https://www.instagram.com/kuximumu_" target="_blank" rel="noopener noreferrer" class="social-link ig">
                         <i class="fa-brands fa-instagram"></i> Instagram
                     </a>
-                    <a href="https://x.com/kuximumu_" target="_blank" rel="noopener noreferrer" class="social-btn x">
+                    <a href="https://x.com/kuximumu_" target="_blank" rel="noopener noreferrer" class="social-link x">
                         <i class="fa-brands fa-x-twitter"></i> Twitter (X)
                     </a>
-                    <a href="https://www.tiktok.com/@kuximumu_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
+                    <a href="https://www.tiktok.com/@kuximumu_" target="_blank" rel="noopener noreferrer" class="social-link tiktok">
                         <i class="fa-brands fa-tiktok"></i> TikTok
                     </a>
                 </div>
             </div>
+        </div>
 
-            <!-- TAB 2: Character Design -->
-            <div id="character" class="tab-content">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            
+            <!-- Tab 1: About -->
+            <div id="about" class="tab-pane active">
+                <!-- Blank for full 3D Cockatiel view -->
+            </div>
+
+            <!-- Tab 2: Character Design Showcase -->
+            <div id="character" class="tab-pane">
                 <div class="gallery-grid">
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-user-astronaut"></i><span>Artwork 01</span></div>
-                        <div class="art-info"><div class="art-title">Original Character #1</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-ghost"></i></div>
+                        <div class="art-meta">
+                            <h3>Pastel Guardian</h3>
+                            <p>Character Design / Original Concept</p>
+                        </div>
                     </div>
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Artwork 02</span></div>
-                        <div class="art-info"><div class="art-title">Original Character #2</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-hat-wizard"></i></div>
+                        <div class="art-meta">
+                            <h3>Sky Sorcerer</h3>
+                            <p>Character Sheet / Costume Design</p>
+                        </div>
                     </div>
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-mask"></i><span>Artwork 03</span></div>
-                        <div class="art-info"><div class="art-title">Chibi Concept</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-dragon"></i></div>
+                        <div class="art-meta">
+                            <h3>Cloud Mascot</h3>
+                            <p>Creature & Chibi Design</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 3: Concept Art -->
-            <div id="concept" class="tab-content">
+            <!-- Tab 3: Concept Art Showcase -->
+            <div id="concept" class="tab-pane">
                 <div class="gallery-grid">
                     <div class="art-card concept">
-                        <div class="art-placeholder"><i class="fa-solid fa-cloud-moon"></i><span>Artwork 01</span></div>
-                        <div class="art-info"><div class="art-title">Fantasy World Concept</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-cloud-sun"></i></div>
+                        <div class="art-meta">
+                            <h3>Floating Citadel</h3>
+                            <p>Environment Concept Art</p>
+                        </div>
                     </div>
                     <div class="art-card concept">
-                        <div class="art-placeholder"><i class="fa-solid fa-castle"></i><span>Artwork 02</span></div>
-                        <div class="art-info"><div class="art-title">Environment Design</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-crystal-ball"></i></div>
+                        <div class="art-meta">
+                            <h3>Crystal Sanctuary</h3>
+                            <p>Color Key & Moodboard</p>
+                        </div>
                     </div>
                     <div class="art-card concept">
-                        <div class="art-placeholder"><i class="fa-solid fa-sun-plant-wilt"></i><span>Artwork 03</span></div>
-                        <div class="art-info"><div class="art-title">Background Concept</div></div>
+                        <div class="art-thumb"><i class="fa-solid fa-monument"></i></div>
+                        <div class="art-meta">
+                            <h3>Pastel World Engine</h3>
+                            <p>Prop & Architecture Design</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
+
     </div>
 
-    <!-- Import Three.js Library -->
+    <!-- Three.js & OrbitControls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // 1. Tab Switching Function
-        function switchTab(e, tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-            e.currentTarget.classList.add('active');
-        }
-
-        // 2. Three.js Background Setup
+        // --- 1. THREE.JS SCENE SETUP ---
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0xeaf6ff, 0.012);
 
-        scene.fog = new THREE.FogExp2(0xeaf6ff, 0.015);
-
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 28;
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(2, 1, 14);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
         container.appendChild(renderer.domElement);
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        // --- 2. LIGHTING (PASTEL ATMOSPHERE) ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
 
-        const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.2);
-        blueLight.position.set(-10, 10, 10);
+        const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.5);
+        blueLight.position.set(-10, 12, 10);
         scene.add(blueLight);
 
-        const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.2);
-        pinkLight.position.set(10, -10, 10);
+        const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.5);
+        pinkLight.position.set(10, -10, 8);
         scene.add(pinkLight);
 
-        // Floating Pastel 3D Geometries
-        const shapes = [];
-        const pastelColors = [0xa8d8ea, 0xfaccff, 0xffd3e2, 0xe0c3fc, 0xc4faf8];
-        const geometries = [
-            new THREE.IcosahedronGeometry(1.2, 0),
-            new THREE.TorusGeometry(1, 0.4, 16, 40),
-            new THREE.OctahedronGeometry(1.2, 0),
-            new THREE.SphereGeometry(1, 32, 32)
-        ];
+        // --- 3. 3D COCKATIEL MASCOT CREATION ---
+        const cockatielGroup = new THREE.Group();
 
-        for (let i = 0; i < 40; i++) {
-            const geom = geometries[Math.floor(Math.random() * geometries.length)];
-            const color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+        // Pastel Materials
+        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff8ee, flatShading: true });
+        const headMat = new THREE.MeshPhongMaterial({ color: 0xffea85, flatShading: true });
+        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xffa3a5, flatShading: true });
+        const beakMat = new THREE.MeshPhongMaterial({ color: 0xd8b4fe, flatShading: true });
+        const eyeMat = new THREE.MeshBasicMaterial({ color: 0x3d3b62 });
+        const wingMat = new THREE.MeshPhongMaterial({ color: 0xa8d8ea, flatShading: true });
+        const tailMat = new THREE.MeshPhongMaterial({ color: 0xfaccff, flatShading: true });
 
-            const mat = new THREE.MeshPhongMaterial({
-                color: color,
-                shininess: 70,
-                flatShading: true,
-                transparent: true,
-                opacity: 0.8
-            });
+        // Body
+        const bodyGeom = new THREE.SphereGeometry(1.8, 16, 16);
+        bodyGeom.scale(1, 1.3, 0.9);
+        const body = new THREE.Mesh(bodyGeom, bodyMat);
+        cockatielGroup.add(body);
 
-            const mesh = new THREE.Mesh(geom, mat);
-            mesh.position.x = (Math.random() - 0.5) * 50;
-            mesh.position.y = (Math.random() - 0.5) * 50;
-            mesh.position.z = (Math.random() - 0.5) * 30 - 5;
+        // Head Group (for independent rotation)
+        const headGroup = new THREE.Group();
+        headGroup.position.set(0, 2.0, 0.2);
 
-            mesh.rotation.x = Math.random() * Math.PI;
-            mesh.rotation.y = Math.random() * Math.PI;
+        const headGeom = new THREE.SphereGeometry(1.3, 16, 16);
+        const head = new THREE.Mesh(headGeom, headMat);
+        headGroup.add(head);
 
-            mesh.userData = {
-                rotSpeedX: (Math.random() - 0.5) * 0.012,
-                rotSpeedY: (Math.random() - 0.5) * 0.012,
-                floatSpeed: Math.random() * 0.015 + 0.005,
-                floatOffset: Math.random() * Math.PI * 2
-            };
+        // Beak
+        const beakGeom = new THREE.ConeGeometry(0.35, 0.7, 4);
+        const beak = new THREE.Mesh(beakGeom, beakMat);
+        beak.position.set(0, -0.2, 1.3);
+        beak.rotation.x = Math.PI / 3;
+        headGroup.add(beak);
 
-            scene.add(mesh);
-            shapes.push(mesh);
+        // Crest (Feathers)
+        for (let i = 0; i < 4; i++) {
+            const crestGeom = new THREE.ConeGeometry(0.15, 1.4 - i * 0.2, 4);
+            const crest = new THREE.Mesh(crestGeom, headMat);
+            crest.position.set(0, 1.2 + i * 0.15, -i * 0.15);
+            crest.rotation.x = -0.2 - i * 0.15;
+            headGroup.add(crest);
         }
 
-        // Mouse Parallax Effect
-        let mouseX = 0;
-        let mouseY = 0;
+        // Cheeks
+        const cheekGeom = new THREE.CylinderGeometry(0.4, 0.4, 0.08, 12);
+        const leftCheek = new THREE.Mesh(cheekGeom, cheekMat);
+        leftCheek.position.set(-1.0, -0.2, 0.8);
+        leftCheek.rotation.z = Math.PI / 2;
+        leftCheek.rotation.y = -Math.PI / 6;
+
+        const rightCheek = leftCheek.clone();
+        rightCheek.position.set(1.0, -0.2, 0.8);
+        rightCheek.rotation.y = Math.PI / 6;
+
+        headGroup.add(leftCheek);
+        headGroup.add(rightCheek);
+
+        // Eyes
+        const eyeGeom = new THREE.SphereGeometry(0.16, 8, 8);
+        const leftEye = new THREE.Mesh(eyeGeom, eyeMat);
+        leftEye.position.set(-0.75, 0.1, 0.95);
+
+        const rightEye = leftEye.clone();
+        rightEye.position.set(0.75, 0.1, 0.95);
+
+        headGroup.add(leftEye);
+        headGroup.add(rightEye);
+
+        cockatielGroup.add(headGroup);
+
+        // Wings Pivot
+        const leftWingPivot = new THREE.Group();
+        leftWingPivot.position.set(-1.6, 0.6, 0);
+        const wingGeom = new THREE.ConeGeometry(1.0, 3.2, 4);
+        const leftWing = new THREE.Mesh(wingGeom, wingMat);
+        leftWing.position.set(-0.2, -1.2, 0);
+        leftWing.rotation.z = 0.2;
+        leftWingPivot.add(leftWing);
+        cockatielGroup.add(leftWingPivot);
+
+        const rightWingPivot = new THREE.Group();
+        rightWingPivot.position.set(1.6, 0.6, 0);
+        const rightWing = new THREE.Mesh(wingGeom, wingMat);
+        rightWing.position.set(0.2, -1.2, 0);
+        rightWing.rotation.z = -0.2;
+        rightWingPivot.add(rightWing);
+        cockatielGroup.add(rightWingPivot);
+
+        // Tail
+        const tailGeom = new THREE.BoxGeometry(0.7, 3.2, 0.08);
+        const tail = new THREE.Mesh(tailGeom, tailMat);
+        tail.position.set(0, -2.0, -0.8);
+        tail.rotation.x = -Math.PI / 6;
+        cockatielGroup.add(tail);
+
+        cockatielGroup.position.set(2, 0, 0);
+        cockatielGroup.scale.set(1.4, 1.4, 1.4);
+        scene.add(cockatielGroup);
+
+        // --- 4. MAGICAL PASTEL PARTICLES ---
+        const particleCount = 120;
+        const particleGeom = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        const pColors = [new THREE.Color('#a8d8ea'), new THREE.Color('#faccff'), new THREE.Color('#ffd3e2')];
+
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 40;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+
+            const c = pColors[Math.floor(Math.random() * pColors.length)];
+            colors[i * 3] = c.r;
+            colors[i * 3 + 1] = c.g;
+            colors[i * 3 + 2] = c.b;
+        }
+
+        particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.35,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        const particleSystem = new THREE.Points(particleGeom, particleMat);
+        scene.add(particleSystem);
+
+        // --- 5. INTERACTION & ANIMATION ---
+        let mouseX = 0, mouseY = 0;
+        let targetCamX = 2;
 
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // Render Loop
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
+            const time = clock.getElapsedTime();
 
-            shapes.forEach(shape => {
-                shape.rotation.x += shape.userData.rotSpeedX;
-                shape.rotation.y += shape.userData.rotSpeedY;
-                shape.position.y += Math.sin(elapsedTime * 1.5 + shape.userData.floatOffset) * 0.012;
-            });
+            // Cockatiel Gentle Floating
+            cockatielGroup.position.y = Math.sin(time * 2) * 0.3;
+            cockatielGroup.rotation.y = Math.sin(time * 0.8) * 0.15;
 
-            camera.position.x += (mouseX * 3 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 3 - camera.position.y) * 0.05;
-            camera.lookAt(scene.position);
+            // Head Looking at Mouse
+            headGroup.rotation.y = mouseX * 0.6;
+            headGroup.rotation.x = -mouseY * 0.4;
+
+            // Wing Flapping
+            leftWingPivot.rotation.z = Math.sin(time * 3) * 0.15;
+            rightWingPivot.rotation.z = -Math.sin(time * 3) * 0.15;
+
+            // Particles Floating
+            particleSystem.rotation.y = time * 0.05;
+
+            // Smooth Camera Parallax
+            camera.position.x += (targetCamX + mouseX * 1.5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 1.5 + 1 - camera.position.y) * 0.05;
+            camera.lookAt(1, 0, 0);
 
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // Responsive Camera Setup
+        // --- 6. TAB SWITCHING LOGIC & CAMERA POSITIONING ---
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            // Shift 3D Camera Focus depending on tab
+            if (tabId === 'about') {
+                targetCamX = 2; // Focus on Cockatiel
+            } else {
+                targetCamX = 6; // Move Cockatiel to side to showcase artwork
+            }
+        }
+
+        // --- 7. RESPONSIVE LISTENER ---
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
