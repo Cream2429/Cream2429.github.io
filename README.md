@@ -1,26 +1,27 @@
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glacier Kumu | 3D Interactive Portfolio</title>
+    <title>Glacier Kumu | Ultra 3D Portfolio</title>
     
-    <!-- Google Fonts & FontAwesome Icons -->
+    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
             --pastel-blue: #a8d8ea;
             --pastel-pink: #faccff;
-            --pastel-purple: #c4faf8;
+            --pastel-yellow: #fff3a0;
             --pastel-accent: #7b2cbf;
             --text-dark: #2b2d42;
             --text-muted: #6c757d;
             --glass-card: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 20px 50px rgba(168, 216, 234, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.85);
+            --glass-shadow: 0 25px 50px -12px rgba(168, 216, 234, 0.45);
         }
 
         * {
@@ -35,11 +36,11 @@
             overflow: hidden;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(135deg, #eaf6ff 0%, #ffeaf2 50%, #f3e8ff 100%);
+            background: radial-gradient(circle at 80% 20%, #ffeaf2 0%, #eaf6ff 50%, #f3e8ff 100%);
             color: var(--text-dark);
         }
 
-        /* Three.js Canvas Container */
+        /* 3D Canvas Container */
         #webgl-container {
             position: fixed;
             top: 0;
@@ -49,87 +50,104 @@
             z-index: 1;
         }
 
-        /* Overlay UI Container */
+        /* UI Overlay Wrapper */
         .ui-layout {
             position: relative;
             z-index: 2;
             width: 100%;
             height: 100vh;
             display: grid;
-            grid-template-columns: 360px 1fr;
-            gap: 20px;
+            grid-template-columns: 380px 1fr;
+            gap: 25px;
             padding: 30px;
             pointer-events: none;
         }
 
-        /* Glassmorphism Sidebar (Profile Card) */
+        /* Glassmorphism Sidebar */
         .sidebar {
             pointer-events: auto;
             background: var(--glass-card);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 2px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 35px 25px;
+            border-radius: 36px;
+            padding: 35px 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: var(--glass-shadow);
-            animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .profile-header {
-            text-align: center;
+            animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .profile-badge {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             margin: 0 auto 15px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #fff3b0, #faccff);
+            background: linear-gradient(135deg, #fff3a0, #faccff, #a8d8ea);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: #ff9f1c;
-            box-shadow: 0 10px 25px rgba(250, 204, 255, 0.6);
-            border: 3px solid #fff;
+            font-size: 2.2rem;
+            color: #ff85a1;
+            box-shadow: 0 12px 28px rgba(250, 204, 255, 0.8);
+            border: 4px solid #fff;
+            animation: pulse 3s infinite ease-in-out;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--text-dark);
+            text-align: center;
             letter-spacing: -0.5px;
         }
 
         .pen-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #7b2cbf, #ff85a1);
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(45deg, #7b2cbf, #ff85a1, #1877f2);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
             margin-bottom: 12px;
         }
 
         .bio-tag {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 6px 16px;
+            display: table;
+            margin: 0 auto 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 18px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            font-weight: 700;
             color: #5a5a7a;
             border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
         }
 
         .bio-desc {
             font-size: 0.85rem;
             line-height: 1.6;
             color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .interactive-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 243, 160, 0.6);
+            border: 1px solid #ffe866;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #7a5c00;
             margin-bottom: 20px;
         }
 
@@ -143,44 +161,49 @@
 
         .tab-btn {
             border: none;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.65);
             padding: 14px 20px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            border-radius: 20px;
+            font-size: 0.92rem;
+            font-weight: 700;
             color: var(--text-dark);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
         }
 
         .tab-btn i {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--pastel-accent);
+            transition: transform 0.3s ease;
         }
 
         .tab-btn:hover {
             background: #ffffff;
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px rgba(168, 216, 234, 0.4);
+            transform: translateX(6px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(168, 216, 234, 0.45);
+        }
+
+        .tab-btn:hover i {
+            transform: scale(1.2) rotate(10deg);
         }
 
         .tab-btn.active {
             background: #ffffff;
-            border-color: var(--pastel-pink);
-            box-shadow: 0 10px 25px rgba(250, 204, 255, 0.5);
-            transform: translateX(8px);
+            border-color: #faccff;
+            box-shadow: 0 12px 28px rgba(250, 204, 255, 0.6);
+            transform: translateX(10px);
         }
 
-        /* Contact Social Grid */
+        /* Social Contact Grid */
         .social-title {
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             color: #8a8aa0;
             margin-bottom: 10px;
         }
@@ -196,29 +219,29 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 11px;
+            border-radius: 14px;
             background: #ffffff;
             color: var(--text-dark);
             text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            font-size: 0.82rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .social-link:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-4px) scale(1.05);
             color: #fff;
         }
 
-        .social-link.fb:hover { background: #1877f2; }
-        .social-link.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
-        .social-link.x:hover { background: #000; }
-        .social-link.tiktok:hover { background: #000; color: #00f2fe; }
+        .social-link.fb:hover { background: #1877f2; box-shadow: 0 8px 20px rgba(24, 119, 242, 0.35); }
+        .social-link.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); box-shadow: 0 8px 20px rgba(220, 39, 67, 0.35); }
+        .social-link.x:hover { background: #000; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); }
+        .social-link.tiktok:hover { background: #000; color: #00f2fe; box-shadow: 0 8px 20px rgba(0, 242, 254, 0.35); }
 
-        /* Main Content Showcase Display */
+        /* Main Showcase Area */
         .main-content {
             pointer-events: auto;
             position: relative;
@@ -231,79 +254,77 @@
             display: none;
             width: 100%;
             height: 100%;
-            max-height: 80vh;
+            max-height: 82vh;
             overflow-y: auto;
             padding: 20px;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .tab-pane.active {
             display: block;
         }
 
-        .tab-pane::-webkit-scrollbar {
-            width: 6px;
-        }
-        .tab-pane::-webkit-scrollbar-thumb {
-            background: rgba(250, 204, 255, 0.8);
-            border-radius: 10px;
-        }
+        .tab-pane::-webkit-scrollbar { width: 6px; }
+        .tab-pane::-webkit-scrollbar-thumb { background: rgba(250, 204, 255, 0.8); border-radius: 10px; }
 
-        /* Showcase Grid */
+        /* Showcase Cards */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
         }
 
         .art-card {
             background: var(--glass-card);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 2px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
         }
 
         .art-card:hover {
-            transform: translateY(-10px) rotate(1deg);
-            box-shadow: 0 20px 40px rgba(168, 216, 234, 0.5);
+            transform: translateY(-12px) rotate(1.5deg) scale(1.02);
+            box-shadow: 0 22px 45px rgba(168, 216, 234, 0.55);
             border-color: #fff;
         }
 
         .art-thumb {
-            height: 200px;
+            height: 210px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 3.5rem;
+            color: rgba(255, 255, 255, 0.95);
+            position: relative;
         }
 
         .art-card.char .art-thumb { background: linear-gradient(135deg, #a8d8ea, #faccff); }
         .art-card.concept .art-thumb { background: linear-gradient(135deg, #ffd3e2, #c4faf8); }
 
         .art-meta {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.8);
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .art-meta h3 {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 4px;
         }
 
         .art-meta p {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 600;
             color: var(--text-muted);
         }
 
+        /* Animations */
         @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
+            from { opacity: 0; transform: translateX(-60px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
@@ -312,14 +333,20 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         @media (max-width: 900px) {
-            .ui-layout {
-                grid-template-columns: 1fr;
-                overflow-y: auto;
-                height: auto;
-            }
+            .ui-layout { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
             body { overflow-y: auto; }
-            .sidebar { max-width: 100%; }
         }
     </style>
 </head>
@@ -334,21 +361,23 @@
         <!-- Sidebar Profile -->
         <div class="sidebar">
             <div>
-                <div class="profile-header">
-                    <div class="profile-badge">
-                        <i class="fa-solid fa-kiwi-bird"></i>
-                    </div>
-                    <h1>Jaranya Tosanhuan</h1>
-                    <div class="pen-name">Glacier Kumu</div>
-                    <div class="bio-tag">Character Design & Concept Art</div>
+                <div class="profile-badge">
+                    <i class="fa-solid fa-kiwi-bird"></i>
                 </div>
+                <h1>Jaranya Tosanhuan</h1>
+                <div class="pen-name">Glacier Kumu</div>
+                <div class="bio-tag">Character Design & Concept Art</div>
 
                 <p class="bio-desc">
                     ✨ I love Character Design and Concept art.<br>
-                    ยินดีต้อนรับสู่โลกพาสเทล 3D พร้อมน้องนกคอกคาเทลสีเหลืองขยับตามเมาส์ได้ครับ!
+                    ต้อนรับสู่ 3D World โทนพาสเทล สามารถลองเอาเมาส์วนหรือ **คลิกที่ตัวน้องนก** เพื่อดูท่าทางพิเศษได้เลยครับ!
                 </p>
 
-                <!-- Tabs Navigation -->
+                <div class="interactive-hint">
+                    <i class="fa-solid fa-hand-pointer"></i> Click Cockatiel to Play Joy Jump!
+                </div>
+
+                <!-- Navigation Tabs -->
                 <div class="nav-tabs">
                     <button class="tab-btn active" onclick="switchTab('about', this)">
                         <i class="fa-solid fa-heart"></i> About & Contact
@@ -382,7 +411,7 @@
             </div>
         </div>
 
-        <!-- Main Content Area -->
+        <!-- Main Showcase Content -->
         <div class="main-content">
             
             <div id="about" class="tab-pane active"></div>
@@ -443,146 +472,172 @@
 
     </div>
 
-    <!-- Three.js -->
+    <!-- Three.js Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // --- 1. THREE.JS SCENE SETUP ---
+        // --- 1. ENGINE & SCENE SETUP ---
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0xeaf6ff, 0.012);
 
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(2, 1, 14);
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(2, 1, 15);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // --- 2. LIGHTING ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+        // --- 2. ADVANCED LIGHTING ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
 
-        const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.4);
-        blueLight.position.set(-10, 12, 10);
-        scene.add(blueLight);
+        const mainLight = new THREE.DirectionalLight(0xfffae0, 1.2);
+        mainLight.position.set(5, 12, 8);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.width = 1024;
+        mainLight.shadow.mapSize.height = 1024;
+        scene.add(mainLight);
 
-        const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.4);
-        pinkLight.position.set(10, -10, 8);
-        scene.add(pinkLight);
+        const blueRimLight = new THREE.DirectionalLight(0xa8d8ea, 1.5);
+        blueRimLight.position.set(-10, 5, -5);
+        scene.add(blueRimLight);
 
-        // --- 3. 3D YELLOW COCKATIEL CREATION ---
+        const pinkRimLight = new THREE.DirectionalLight(0xfaccff, 1.5);
+        pinkRimLight.position.set(10, -5, 5);
+        scene.add(pinkRimLight);
+
+        // --- 3. PROCEDURAL HIGH-QUALITY LUTINO COCKATIEL ---
         const cockatielGroup = new THREE.Group();
 
-        // Yellow Pastel Materials (ปรับเป็นโทนเหลืองลูติโน่)
-        const yellowBodyMat = new THREE.MeshPhongMaterial({ color: 0xfff3a0, flatShading: true }); // ตัวสีเหลืองนวล
-        const yellowHeadMat = new THREE.MeshPhongMaterial({ color: 0xffd000, flatShading: true }); // หัวและหงอนสีเหลืองสด
-        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xff6b4a, flatShading: true });      // แก้มส้มป๊อกสดใส
-        const beakMat = new THREE.MeshPhongMaterial({ color: 0xffdfba, flatShading: true });       // ปากสีเนื้อ
-        const eyeMat = new THREE.MeshBasicMaterial({ color: 0x3d3b62 });                          // ตา
-        const wingMat = new THREE.MeshPhongMaterial({ color: 0xfff8c5, flatShading: true });       // ปีกเหลืองอ่อนพาสเทล
-        const tailMat = new THREE.MeshPhongMaterial({ color: 0xffea85, flatShading: true });       // หางสีเหลืองสด
+        // Pastel Materials
+        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff6a5, flatShading: true }); // Lutino Yellow
+        const headMat = new THREE.MeshPhongMaterial({ color: 0xffd000, flatShading: true }); // Bright Yellow
+        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xff5e36, flatShading: true }); // Orange Cheek
+        const beakMat = new THREE.MeshPhongMaterial({ color: 0xffdfba, flatShading: true });
+        const eyeMat = new THREE.MeshPhongMaterial({ color: 0x22223b, shininess: 100 });
+        const wingMat = new THREE.MeshPhongMaterial({ color: 0xfffce0, flatShading: true });
+        const perchMat = new THREE.MeshPhongMaterial({ color: 0xd8b4fe, flatShading: true }); // Pastel Wood
 
         // Body
-        const bodyGeom = new THREE.SphereGeometry(1.8, 16, 16);
-        bodyGeom.scale(1, 1.3, 0.9);
-        const body = new THREE.Mesh(bodyGeom, yellowBodyMat);
+        const bodyGeom = new THREE.SphereGeometry(1.8, 18, 18);
+        bodyGeom.scale(1, 1.3, 0.95);
+        const body = new THREE.Mesh(bodyGeom, bodyMat);
+        body.castShadow = true;
         cockatielGroup.add(body);
 
         // Head Group
         const headGroup = new THREE.Group();
-        headGroup.position.set(0, 2.0, 0.2);
+        headGroup.position.set(0, 2.0, 0.25);
 
-        const headGeom = new THREE.SphereGeometry(1.3, 16, 16);
-        const head = new THREE.Mesh(headGeom, yellowHeadMat);
+        const headGeom = new THREE.SphereGeometry(1.25, 18, 18);
+        const head = new THREE.Mesh(headGeom, headMat);
+        head.castShadow = true;
         headGroup.add(head);
 
         // Beak
-        const beakGeom = new THREE.ConeGeometry(0.35, 0.7, 4);
+        const beakGeom = new THREE.ConeGeometry(0.35, 0.75, 5);
         const beak = new THREE.Mesh(beakGeom, beakMat);
-        beak.position.set(0, -0.2, 1.3);
+        beak.position.set(0, -0.22, 1.25);
         beak.rotation.x = Math.PI / 3;
         headGroup.add(beak);
 
-        // Yellow Crest (หงอนสีเหลืองเด่น)
-        for (let i = 0; i < 4; i++) {
-            const crestGeom = new THREE.ConeGeometry(0.15, 1.5 - i * 0.2, 4);
-            const crest = new THREE.Mesh(crestGeom, yellowHeadMat);
-            crest.position.set(0, 1.2 + i * 0.15, -i * 0.15);
+        // Dynamic Feathers Crest (หงอนพริ้วไหว)
+        const crestFeathers = [];
+        for (let i = 0; i < 5; i++) {
+            const crestGeom = new THREE.ConeGeometry(0.14, 1.6 - i * 0.2, 4);
+            const crest = new THREE.Mesh(crestGeom, headMat);
+            crest.position.set(0, 1.2 + i * 0.12, -i * 0.14);
             crest.rotation.x = -0.2 - i * 0.15;
             headGroup.add(crest);
+            crestFeathers.push(crest);
         }
 
         // Cheeks
-        const cheekGeom = new THREE.CylinderGeometry(0.42, 0.42, 0.08, 12);
+        const cheekGeom = new THREE.CylinderGeometry(0.42, 0.42, 0.08, 16);
         const leftCheek = new THREE.Mesh(cheekGeom, cheekMat);
-        leftCheek.position.set(-1.0, -0.2, 0.8);
+        leftCheek.position.set(-1.0, -0.18, 0.78);
         leftCheek.rotation.z = Math.PI / 2;
         leftCheek.rotation.y = -Math.PI / 6;
 
         const rightCheek = leftCheek.clone();
-        rightCheek.position.set(1.0, -0.2, 0.8);
+        rightCheek.position.set(1.0, -0.18, 0.78);
         rightCheek.rotation.y = Math.PI / 6;
 
         headGroup.add(leftCheek);
         headGroup.add(rightCheek);
 
-        // Eyes
-        const eyeGeom = new THREE.SphereGeometry(0.16, 8, 8);
+        // Eyes (มีประกายแวววาว)
+        const eyeGeom = new THREE.SphereGeometry(0.18, 12, 12);
         const leftEye = new THREE.Mesh(eyeGeom, eyeMat);
-        leftEye.position.set(-0.75, 0.1, 0.95);
+        leftEye.position.set(-0.72, 0.12, 0.92);
 
         const rightEye = leftEye.clone();
-        rightEye.position.set(0.75, 0.1, 0.95);
+        rightEye.position.set(0.72, 0.12, 0.92);
 
         headGroup.add(leftEye);
         headGroup.add(rightEye);
 
         cockatielGroup.add(headGroup);
 
-        // Wings Pivot
+        // Wings Pivots
         const leftWingPivot = new THREE.Group();
-        leftWingPivot.position.set(-1.6, 0.6, 0);
-        const wingGeom = new THREE.ConeGeometry(1.0, 3.2, 4);
+        leftWingPivot.position.set(-1.65, 0.6, 0);
+        const wingGeom = new THREE.ConeGeometry(1.0, 3.4, 5);
         const leftWing = new THREE.Mesh(wingGeom, wingMat);
-        leftWing.position.set(-0.2, -1.2, 0);
-        leftWing.rotation.z = 0.2;
+        leftWing.position.set(-0.2, -1.3, 0);
+        leftWing.rotation.z = 0.25;
         leftWingPivot.add(leftWing);
         cockatielGroup.add(leftWingPivot);
 
         const rightWingPivot = new THREE.Group();
-        rightWingPivot.position.set(1.8, 0.6, 0);
+        rightWingPivot.position.set(1.65, 0.6, 0);
         const rightWing = new THREE.Mesh(wingGeom, wingMat);
-        rightWing.position.set(0.2, -1.2, 0);
-        rightWing.rotation.z = -0.2;
+        rightWing.position.set(0.2, -1.3, 0);
+        rightWing.rotation.z = -0.25;
         rightWingPivot.add(rightWing);
         cockatielGroup.add(rightWingPivot);
 
         // Tail
-        const tailGeom = new THREE.BoxGeometry(0.7, 3.2, 0.08);
-        const tail = new THREE.Mesh(tailGeom, tailMat);
-        tail.position.set(0, -2.0, -0.8);
-        tail.rotation.x = -Math.PI / 6;
+        const tailGeom = new THREE.BoxGeometry(0.75, 3.6, 0.08);
+        const tail = new THREE.Mesh(tailGeom, wingMat);
+        tail.position.set(0, -2.1, -0.85);
+        tail.rotation.x = -Math.PI / 5;
         cockatielGroup.add(tail);
 
+        // Perch Wood (คอนไม้ 3D)
+        const perchGeom = new THREE.CylinderGeometry(0.22, 0.22, 6, 16);
+        const perch = new THREE.Mesh(perchGeom, perchMat);
+        perch.rotation.z = Math.PI / 2;
+        perch.position.set(0, -2.3, 0.1);
+        cockatielGroup.add(perch);
+
         cockatielGroup.position.set(2, 0, 0);
-        cockatielGroup.scale.set(1.4, 1.4, 1.4);
+        cockatielGroup.scale.set(1.3, 1.3, 1.3);
         scene.add(cockatielGroup);
 
-        // --- 4. MAGICAL PASTEL PARTICLES ---
-        const particleCount = 120;
+        // --- 4. STAGE DECORATIONS (PASTEL RINGS & PARTICLES) ---
+        // Ring Aura Stage
+        const ringGeom = new THREE.TorusGeometry(4.5, 0.12, 16, 100);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xfaccff, wireframe: true, transparent: true, opacity: 0.4 });
+        const ring = new THREE.Mesh(ringGeom, ringMat);
+        ring.position.set(2, 0, -2);
+        scene.add(ring);
+
+        // Sparkle Particles
+        const particleCount = 180;
         const particleGeom = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-
         const pColors = [new THREE.Color('#a8d8ea'), new THREE.Color('#faccff'), new THREE.Color('#fff3a0')];
 
         for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 40;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 40;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+            positions[i * 3] = (Math.random() - 0.5) * 45;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 45;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
 
             const c = pColors[Math.floor(Math.random() * pColors.length)];
             colors[i * 3] = c.r;
@@ -594,44 +649,88 @@
         particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const particleMat = new THREE.PointsMaterial({
-            size: 0.35,
+            size: 0.38,
             vertexColors: true,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.85
         });
 
         const particleSystem = new THREE.Points(particleGeom, particleMat);
         scene.add(particleSystem);
 
-        // --- 5. INTERACTION & ANIMATION ---
+        // --- 5. INTERACTION & RAYCASTING (CLICK TO JUMP) ---
         let mouseX = 0, mouseY = 0;
         let targetCamX = 2;
+        let jumpProgress = 0;
+        let isJumping = false;
+
+        const raycaster = new THREE.Raycaster();
+        const mouseVec = new THREE.Vector2();
 
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
+        window.addEventListener('click', (e) => {
+            mouseVec.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseVec.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouseVec, camera);
+            const intersects = raycaster.intersectObjects(cockatielGroup.children, true);
+
+            if (intersects.length > 0 && !isJumping) {
+                isJumping = true;
+                jumpProgress = 0;
+            }
+        });
+
+        // --- 6. ANIMATION LOOP ---
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
 
-            // Cockatiel Floating Animation
-            cockatielGroup.position.y = Math.sin(time * 2) * 0.3;
-            cockatielGroup.rotation.y = Math.sin(time * 0.8) * 0.15;
+            // Cockatiel Floating & Tilting
+            if (!isJumping) {
+                cockatielGroup.position.y = Math.sin(time * 2) * 0.25;
+                cockatielGroup.rotation.y = Math.sin(time * 0.8) * 0.15;
+            } else {
+                // Joy Jump Animation on Click!
+                jumpProgress += 0.08;
+                cockatielGroup.position.y = Math.sin(jumpProgress * Math.PI) * 1.8;
+                cockatielGroup.rotation.y += 0.2;
+                leftWingPivot.rotation.z = Math.sin(jumpProgress * Math.PI * 2) * 0.8;
+                rightWingPivot.rotation.z = -Math.sin(jumpProgress * Math.PI * 2) * 0.8;
 
-            // Head Looking at Mouse
-            headGroup.rotation.y = mouseX * 0.6;
-            headGroup.rotation.x = -mouseY * 0.4;
+                if (jumpProgress >= 1) {
+                    isJumping = false;
+                    cockatielGroup.rotation.y = 0;
+                }
+            }
 
-            // Wing Flapping
-            leftWingPivot.rotation.z = Math.sin(time * 3) * 0.15;
-            rightWingPivot.rotation.z = -Math.sin(time * 3) * 0.15;
+            // Head Looking at Mouse Pointer
+            headGroup.rotation.y = mouseX * 0.65;
+            headGroup.rotation.x = -mouseY * 0.45;
 
-            // Particles Floating
-            particleSystem.rotation.y = time * 0.05;
+            // Crest Dynamic Motion
+            crestFeathers.forEach((crest, idx) => {
+                crest.rotation.x = -0.2 - idx * 0.15 + Math.sin(time * 3 + idx) * 0.05;
+            });
+
+            // Gentle Wings Flapping
+            if (!isJumping) {
+                leftWingPivot.rotation.z = Math.sin(time * 2.5) * 0.12;
+                rightWingPivot.rotation.z = -Math.sin(time * 2.5) * 0.12;
+            }
+
+            // Ring Stage Rotation
+            ring.rotation.x = time * 0.2;
+            ring.rotation.y = time * 0.3;
+
+            // Particle Floating
+            particleSystem.rotation.y = time * 0.03;
 
             // Smooth Camera Motion
             camera.position.x += (targetCamX + mouseX * 1.5 - camera.position.x) * 0.05;
@@ -643,7 +742,7 @@
 
         animate();
 
-        // --- 6. TAB SWITCHING LOGIC ---
+        // --- 7. TAB SWITCHING LOGIC ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -652,12 +751,13 @@
             btn.classList.add('active');
 
             if (tabId === 'about') {
-                targetCamX = 2;
+                targetCamX = 2; // Focus on Cockatiel Stage
             } else {
-                targetCamX = 6;
+                targetCamX = 6.5; // Shift Stage to right to display Artwork Showcase
             }
         }
 
+        // --- 8. RESPONSIVE ---
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
