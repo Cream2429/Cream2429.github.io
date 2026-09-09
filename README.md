@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glacier Kumu | Ultra 3D Portfolio</title>
+    <title>Glacier Kumu | Next-Gen 3D Portfolio</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,9 +18,9 @@
             --pastel-accent: #7b2cbf;
             --text-dark: #2b2d42;
             --text-muted: #6c757d;
-            --glass-card: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.85);
-            --glass-shadow: 0 25px 50px -12px rgba(168, 216, 234, 0.45);
+            --glass-card: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 25px 50px -10px rgba(168, 216, 234, 0.5);
         }
 
         * {
@@ -35,11 +35,10 @@
             overflow: hidden;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at 80% 20%, #ffeaf2 0%, #eaf6ff 50%, #f3e8ff 100%);
+            background: radial-gradient(circle at 70% 30%, #ffeaf2 0%, #eaf6ff 50%, #f3e8ff 100%);
             color: var(--text-dark);
         }
 
-        /* 3D Canvas Container */
         #webgl-container {
             position: fixed;
             top: 0;
@@ -49,14 +48,13 @@
             z-index: 1;
         }
 
-        /* UI Overlay Wrapper */
         .ui-layout {
             position: relative;
             z-index: 2;
             width: 100%;
             height: 100vh;
             display: grid;
-            grid-template-columns: 380px 1fr;
+            grid-template-columns: 390px 1fr;
             gap: 25px;
             padding: 30px;
             pointer-events: none;
@@ -66,8 +64,8 @@
         .sidebar {
             pointer-events: auto;
             background: var(--glass-card);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border: 2px solid var(--glass-border);
             border-radius: 36px;
             padding: 35px 28px;
@@ -79,31 +77,31 @@
         }
 
         .profile-badge {
-            width: 85px;
-            height: 85px;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 15px;
             border-radius: 50%;
             background: linear-gradient(135deg, #fff3a0, #faccff, #a8d8ea);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: #ff85a1;
-            box-shadow: 0 12px 28px rgba(250, 204, 255, 0.8);
+            box-shadow: 0 12px 30px rgba(250, 204, 255, 0.8);
             border: 4px solid #fff;
             animation: pulse 3s infinite ease-in-out;
         }
 
         h1 {
-            font-size: 1.6rem;
-            font-weight: 800;
+            font-size: 1.65rem;
+            font-weight: 900;
             color: var(--text-dark);
             text-align: center;
             letter-spacing: -0.5px;
         }
 
         .pen-name {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 800;
             text-align: center;
             background: linear-gradient(45deg, #7b2cbf, #ff85a1, #1877f2);
@@ -117,7 +115,7 @@
         .bio-tag {
             display: table;
             margin: 0 auto 15px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 6px 18px;
             border-radius: 20px;
             font-size: 0.82rem;
@@ -132,7 +130,7 @@
             line-height: 1.6;
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .interactive-hint {
@@ -140,14 +138,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: rgba(255, 243, 160, 0.6);
-            border: 1px solid #ffe866;
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #7a5c00;
+            background: rgba(255, 243, 160, 0.7);
+            border: 1.5px solid #ffe866;
+            padding: 9px 14px;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #6b5100;
             margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(255, 232, 102, 0.3);
         }
 
         /* Navigation Tabs */
@@ -160,7 +159,7 @@
 
         .tab-btn {
             border: none;
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.7);
             padding: 14px 20px;
             border-radius: 20px;
             font-size: 0.92rem;
@@ -186,9 +185,7 @@
             box-shadow: 0 10px 25px rgba(168, 216, 234, 0.45);
         }
 
-        .tab-btn:hover i {
-            transform: scale(1.2) rotate(10deg);
-        }
+        .tab-btn:hover i { transform: scale(1.25) rotate(10deg); }
 
         .tab-btn.active {
             background: #ffffff;
@@ -230,11 +227,7 @@
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .social-link:hover {
-            transform: translateY(-4px) scale(1.05);
-            color: #fff;
-        }
-
+        .social-link:hover { transform: translateY(-4px) scale(1.05); color: #fff; }
         .social-link.fb:hover { background: #1877f2; box-shadow: 0 8px 20px rgba(24, 119, 242, 0.35); }
         .social-link.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); box-shadow: 0 8px 20px rgba(220, 39, 67, 0.35); }
         .social-link.x:hover { background: #000; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); }
@@ -259,18 +252,16 @@
             animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .tab-pane.active {
-            display: block;
-        }
-
+        .tab-pane.active { display: block; }
         .tab-pane::-webkit-scrollbar { width: 6px; }
         .tab-pane::-webkit-scrollbar-thumb { background: rgba(250, 204, 255, 0.8); border-radius: 10px; }
 
-        /* Showcase Cards */
+        /* 3D Tilt Gallery Grid */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 22px;
+            perspective: 1000px;
         }
 
         .art-card {
@@ -280,13 +271,13 @@
             border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease;
             cursor: pointer;
+            transform-style: preserve-3d;
         }
 
         .art-card:hover {
-            transform: translateY(-12px) rotate(1.5deg) scale(1.02);
-            box-shadow: 0 22px 45px rgba(168, 216, 234, 0.55);
+            box-shadow: 0 25px 50px rgba(168, 216, 234, 0.6);
             border-color: #fff;
         }
 
@@ -295,9 +286,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             color: rgba(255, 255, 255, 0.95);
-            position: relative;
+            transform: translateZ(30px);
         }
 
         .art-card.char .art-thumb { background: linear-gradient(135deg, #a8d8ea, #faccff); }
@@ -305,43 +296,18 @@
 
         .art-meta {
             padding: 18px;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
+            transform: translateZ(20px);
         }
 
-        .art-meta h3 {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .art-meta p {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
+        .art-meta h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+        .art-meta p { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
 
         /* Animations */
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-60px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         @media (max-width: 900px) {
             .ui-layout { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
@@ -351,13 +317,13 @@
 </head>
 <body>
 
-    <!-- 3D Canvas Background -->
+    <!-- WebGL Canvas -->
     <div id="webgl-container"></div>
 
     <!-- UI Overlay -->
     <div class="ui-layout">
         
-        <!-- Sidebar Profile -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div>
                 <div class="profile-badge">
@@ -369,14 +335,14 @@
 
                 <p class="bio-desc">
                     ✨ I love Character Design and Concept art.<br>
-                    ต้อนรับสู่ 3D World โทนพาสเทล สามารถลองเอาเมาส์วนหรือ **คลิกที่ตัวน้องนก** เพื่อดูท่าทางพิเศษได้เลยครับ!
+                    ท่องสู่โลก 3D เกาะลอยได้พาสเทล **ลองคลิกที่ตัวนกคอกคาเทลเหลือง** เพื่อฟังเสียงร้องแบบชิปมังก์ และดูท่ากระโดดดุ๊กดิ๊ก!
                 </p>
 
                 <div class="interactive-hint">
-                    <i class="fa-solid fa-hand-pointer"></i> Click Cockatiel to Play Joy Jump!
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Click Bird for Sound & Joy Jump!
                 </div>
 
-                <!-- Navigation Tabs -->
+                <!-- Nav Tabs -->
                 <div class="nav-tabs">
                     <button class="tab-btn active" onclick="switchTab('about', this)">
                         <i class="fa-solid fa-heart"></i> About & Contact
@@ -410,28 +376,28 @@
             </div>
         </div>
 
-        <!-- Main Showcase Content -->
+        <!-- Main Content Showcase -->
         <div class="main-content">
             
             <div id="about" class="tab-pane active"></div>
 
             <div id="character" class="tab-pane">
                 <div class="gallery-grid">
-                    <div class="art-card char">
+                    <div class="art-card char" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-ghost"></i></div>
                         <div class="art-meta">
                             <h3>Pastel Guardian</h3>
                             <p>Character Design / Original Concept</p>
                         </div>
                     </div>
-                    <div class="art-card char">
+                    <div class="art-card char" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-hat-wizard"></i></div>
                         <div class="art-meta">
                             <h3>Sky Sorcerer</h3>
                             <p>Character Sheet / Costume Design</p>
                         </div>
                     </div>
-                    <div class="art-card char">
+                    <div class="art-card char" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-dragon"></i></div>
                         <div class="art-meta">
                             <h3>Cloud Mascot</h3>
@@ -443,21 +409,21 @@
 
             <div id="concept" class="tab-pane">
                 <div class="gallery-grid">
-                    <div class="art-card concept">
+                    <div class="art-card concept" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-cloud-sun"></i></div>
                         <div class="art-meta">
                             <h3>Floating Citadel</h3>
                             <p>Environment Concept Art</p>
                         </div>
                     </div>
-                    <div class="art-card concept">
+                    <div class="art-card concept" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-crystal-ball"></i></div>
                         <div class="art-meta">
                             <h3>Crystal Sanctuary</h3>
                             <p>Color Key & Moodboard</p>
                         </div>
                     </div>
-                    <div class="art-card concept">
+                    <div class="art-card concept" onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)">
                         <div class="art-thumb"><i class="fa-solid fa-monument"></i></div>
                         <div class="art-meta">
                             <h3>Pastel World Engine</h3>
@@ -475,13 +441,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // --- 1. ENGINE & SCENE SETUP ---
+        // --- 1. SOUND SYNTHESIZER (AUDIO FX) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playChirpSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(2400, audioCtx.currentTime + 0.1);
+            osc.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.2);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        }
+
+        // --- 2. THREE.JS SCENE SETUP ---
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0xeaf6ff, 0.012);
+        scene.fog = new THREE.FogExp2(0xeaf6ff, 0.01);
 
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(2, 1, 15);
+        camera.position.set(2, 2, 16);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -490,36 +479,47 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // --- 2. ADVANCED LIGHTING ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        // --- 3. LIGHTING ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
         scene.add(ambientLight);
 
-        const mainLight = new THREE.DirectionalLight(0xfffae0, 1.2);
-        mainLight.position.set(5, 12, 8);
-        mainLight.castShadow = true;
-        mainLight.shadow.mapSize.width = 1024;
-        mainLight.shadow.mapSize.height = 1024;
-        scene.add(mainLight);
+        const spotLight = new THREE.SpotLight(0xfff3a0, 1.5);
+        spotLight.position.set(5, 15, 10);
+        spotLight.castShadow = true;
+        scene.add(spotLight);
 
-        const blueRimLight = new THREE.DirectionalLight(0xa8d8ea, 1.5);
-        blueRimLight.position.set(-10, 5, -5);
-        scene.add(blueRimLight);
+        const cursorLight = new THREE.PointLight(0xfaccff, 1.2, 15);
+        scene.add(cursorLight);
 
-        const pinkRimLight = new THREE.DirectionalLight(0xfaccff, 1.5);
-        pinkRimLight.position.set(10, -5, 5);
-        scene.add(pinkRimLight);
+        // --- 4. FLOATING ISLAND STAGE ---
+        const stageGroup = new THREE.Group();
+        stageGroup.position.set(2, -1, 0);
 
-        // --- 3. PROCEDURAL HIGH-QUALITY LUTINO COCKATIEL ---
+        // Island Grass Top
+        const islandTopGeom = new THREE.CylinderGeometry(4.5, 3.8, 1.2, 32);
+        const islandTopMat = new THREE.MeshPhongMaterial({ color: 0xc4faf8, flatShading: true });
+        const islandTop = new THREE.Mesh(islandTopGeom, islandTopMat);
+        islandTop.receiveShadow = true;
+        stageGroup.add(islandTop);
+
+        // Island Dirt Bottom
+        const islandBotGeom = new THREE.ConeGeometry(3.8, 3.5, 32);
+        const islandBotMat = new THREE.MeshPhongMaterial({ color: 0xfaccff, flatShading: true });
+        const islandBot = new THREE.Mesh(islandBotGeom, islandBotMat);
+        islandBot.position.y = -2.35;
+        islandBot.rotation.x = Math.PI;
+        stageGroup.add(islandBot);
+
+        // --- 5. LUTINO COCKATIEL MODEL ---
         const cockatielGroup = new THREE.Group();
 
-        // Pastel Materials
-        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff6a5, flatShading: true }); // Lutino Yellow
-        const headMat = new THREE.MeshPhongMaterial({ color: 0xffd000, flatShading: true }); // Bright Yellow
-        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xff5e36, flatShading: true }); // Orange Cheek
+        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff6a5, flatShading: true });
+        const headMat = new THREE.MeshPhongMaterial({ color: 0xffd000, flatShading: true });
+        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xff5e36, flatShading: true });
         const beakMat = new THREE.MeshPhongMaterial({ color: 0xffdfba, flatShading: true });
         const eyeMat = new THREE.MeshPhongMaterial({ color: 0x22223b, shininess: 100 });
         const wingMat = new THREE.MeshPhongMaterial({ color: 0xfffce0, flatShading: true });
-        const perchMat = new THREE.MeshPhongMaterial({ color: 0xd8b4fe, flatShading: true }); // Pastel Wood
+        const perchMat = new THREE.MeshPhongMaterial({ color: 0xd8b4fe, flatShading: true });
 
         // Body
         const bodyGeom = new THREE.SphereGeometry(1.8, 18, 18);
@@ -544,7 +544,7 @@
         beak.rotation.x = Math.PI / 3;
         headGroup.add(beak);
 
-        // Dynamic Feathers Crest (หงอนพริ้วไหว)
+        // Crest
         const crestFeathers = [];
         for (let i = 0; i < 5; i++) {
             const crestGeom = new THREE.ConeGeometry(0.14, 1.6 - i * 0.2, 4);
@@ -569,7 +569,7 @@
         headGroup.add(leftCheek);
         headGroup.add(rightCheek);
 
-        // Eyes (มีประกายแวววาว)
+        // Eyes
         const eyeGeom = new THREE.SphereGeometry(0.18, 12, 12);
         const leftEye = new THREE.Mesh(eyeGeom, eyeMat);
         leftEye.position.set(-0.72, 0.12, 0.92);
@@ -582,7 +582,7 @@
 
         cockatielGroup.add(headGroup);
 
-        // Wings Pivots
+        // Wings
         const leftWingPivot = new THREE.Group();
         leftWingPivot.position.set(-1.65, 0.6, 0);
         const wingGeom = new THREE.ConeGeometry(1.0, 3.4, 5);
@@ -600,42 +600,29 @@
         rightWingPivot.add(rightWing);
         cockatielGroup.add(rightWingPivot);
 
-        // Tail
-        const tailGeom = new THREE.BoxGeometry(0.75, 3.6, 0.08);
-        const tail = new THREE.Mesh(tailGeom, wingMat);
-        tail.position.set(0, -2.1, -0.85);
-        tail.rotation.x = -Math.PI / 5;
-        cockatielGroup.add(tail);
-
-        // Perch Wood (คอนไม้ 3D)
-        const perchGeom = new THREE.CylinderGeometry(0.22, 0.22, 6, 16);
+        // Perch
+        const perchGeom = new THREE.CylinderGeometry(0.22, 0.22, 5.5, 16);
         const perch = new THREE.Mesh(perchGeom, perchMat);
         perch.rotation.z = Math.PI / 2;
-        perch.position.set(0, -2.3, 0.1);
+        perch.position.set(0, -2.1, 0.1);
         cockatielGroup.add(perch);
 
-        cockatielGroup.position.set(2, 0, 0);
-        cockatielGroup.scale.set(1.3, 1.3, 1.3);
-        scene.add(cockatielGroup);
+        cockatielGroup.position.set(0, 2.7, 0);
+        cockatielGroup.scale.set(1.15, 1.15, 1.15);
+        stageGroup.add(cockatielGroup);
 
-        // --- 4. STAGE DECORATIONS (PASTEL RINGS & PARTICLES) ---
-        // Ring Aura Stage
-        const ringGeom = new THREE.TorusGeometry(4.5, 0.12, 16, 100);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0xfaccff, wireframe: true, transparent: true, opacity: 0.4 });
-        const ring = new THREE.Mesh(ringGeom, ringMat);
-        ring.position.set(2, 0, -2);
-        scene.add(ring);
+        scene.add(stageGroup);
 
-        // Sparkle Particles
-        const particleCount = 180;
+        // --- 6. PARTICLES SYSTEM ---
+        const particleCount = 200;
         const particleGeom = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         const pColors = [new THREE.Color('#a8d8ea'), new THREE.Color('#faccff'), new THREE.Color('#fff3a0')];
 
         for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 45;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 45;
+            positions[i * 3] = (Math.random() - 0.5) * 50;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
             positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
 
             const c = pColors[Math.floor(Math.random() * pColors.length)];
@@ -647,17 +634,11 @@
         particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-        const particleMat = new THREE.PointsMaterial({
-            size: 0.38,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.85
-        });
-
+        const particleMat = new THREE.PointsMaterial({ size: 0.38, vertexColors: true, transparent: true, opacity: 0.85 });
         const particleSystem = new THREE.Points(particleGeom, particleMat);
         scene.add(particleSystem);
 
-        // --- 5. INTERACTION & RAYCASTING (CLICK TO JUMP) ---
+        // --- 7. MOUSE & CLICK INTERACTIONS ---
         let mouseX = 0, mouseY = 0;
         let targetCamX = 2;
         let jumpProgress = 0;
@@ -669,6 +650,8 @@
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            cursorLight.position.set(mouseX * 10, -mouseY * 10, 5);
         });
 
         window.addEventListener('click', (e) => {
@@ -681,67 +664,57 @@
             if (intersects.length > 0 && !isJumping) {
                 isJumping = true;
                 jumpProgress = 0;
+                playChirpSound();
             }
         });
 
-        // --- 6. ANIMATION LOOP ---
+        // --- 8. ANIMATION LOOP ---
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
 
-            // Cockatiel Floating & Tilting
-            if (!isJumping) {
-                cockatielGroup.position.y = Math.sin(time * 2) * 0.25;
-                cockatielGroup.rotation.y = Math.sin(time * 0.8) * 0.15;
-            } else {
-                // Joy Jump Animation on Click!
+            // Island Floating
+            stageGroup.position.y = -1 + Math.sin(time * 1.5) * 0.2;
+            stageGroup.rotation.y = Math.sin(time * 0.5) * 0.1;
+
+            // Cockatiel Jump
+            if (isJumping) {
                 jumpProgress += 0.08;
-                cockatielGroup.position.y = Math.sin(jumpProgress * Math.PI) * 1.8;
-                cockatielGroup.rotation.y += 0.2;
+                cockatielGroup.position.y = 2.7 + Math.sin(jumpProgress * Math.PI) * 1.6;
+                cockatielGroup.rotation.y += 0.25;
                 leftWingPivot.rotation.z = Math.sin(jumpProgress * Math.PI * 2) * 0.8;
                 rightWingPivot.rotation.z = -Math.sin(jumpProgress * Math.PI * 2) * 0.8;
 
                 if (jumpProgress >= 1) {
                     isJumping = false;
                     cockatielGroup.rotation.y = 0;
+                    cockatielGroup.position.y = 2.7;
                 }
-            }
-
-            // Head Looking at Mouse Pointer
-            headGroup.rotation.y = mouseX * 0.65;
-            headGroup.rotation.x = -mouseY * 0.45;
-
-            // Crest Dynamic Motion
-            crestFeathers.forEach((crest, idx) => {
-                crest.rotation.x = -0.2 - idx * 0.15 + Math.sin(time * 3 + idx) * 0.05;
-            });
-
-            // Gentle Wings Flapping
-            if (!isJumping) {
+            } else {
                 leftWingPivot.rotation.z = Math.sin(time * 2.5) * 0.12;
                 rightWingPivot.rotation.z = -Math.sin(time * 2.5) * 0.12;
             }
 
-            // Ring Stage Rotation
-            ring.rotation.x = time * 0.2;
-            ring.rotation.y = time * 0.3;
+            // Head Mouse Follow
+            headGroup.rotation.y = mouseX * 0.65;
+            headGroup.rotation.x = -mouseY * 0.45;
 
-            // Particle Floating
-            particleSystem.rotation.y = time * 0.03;
+            // Particles Motion
+            particleSystem.rotation.y = time * 0.02;
 
             // Smooth Camera Motion
             camera.position.x += (targetCamX + mouseX * 1.5 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 1.5 + 1 - camera.position.y) * 0.05;
-            camera.lookAt(1, 0, 0);
+            camera.position.y += (-mouseY * 1.5 + 2 - camera.position.y) * 0.05;
+            camera.lookAt(stageGroup.position);
 
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // --- 7. TAB SWITCHING LOGIC ---
+        // --- 9. UI INTERACTION LOGIC ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -749,14 +722,21 @@
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
 
-            if (tabId === 'about') {
-                targetCamX = 2; // Focus on Cockatiel Stage
-            } else {
-                targetCamX = 6.5; // Shift Stage to right to display Artwork Showcase
-            }
+            targetCamX = (tabId === 'about') ? 2 : 7;
         }
 
-        // --- 8. RESPONSIVE ---
+        function tiltCard(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            card.style.transform = `rotateY(${x / 12}deg) rotateX(${-y / 12}deg) scale(1.03)`;
+        }
+
+        function resetCard(card) {
+            card.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+        }
+
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
