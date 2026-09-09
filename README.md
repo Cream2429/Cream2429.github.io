@@ -39,7 +39,7 @@
             color: var(--text-main);
         }
 
-        /* Canvas พื้นหลัง 3D */
+        /* 3D Canvas Background */
         #webgl-container {
             position: fixed;
             top: 0;
@@ -49,7 +49,7 @@
             z-index: 1;
         }
 
-        /* Overlay UI Container */
+        /* UI Overlay Wrapper */
         .ui-container {
             position: relative;
             z-index: 2;
@@ -62,7 +62,7 @@
             padding: 30px 20px;
         }
 
-        /* Card นำเสนอหลัก (Glassmorphism) */
+        /* Glassmorphism Card Container */
         .portfolio-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -76,7 +76,7 @@
             animation: fadeIn 1s ease-out;
         }
 
-        /* Header Info */
+        /* Header Info Section */
         .header-section {
             text-align: center;
             margin-bottom: 25px;
@@ -165,14 +165,14 @@
         /* Tab Content Section */
         .tab-content {
             display: none;
-            animation: fadeInTab 0.5s ease-in-out;
+            animation: fadeInTab 0.4s ease-in-out;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* About Tab / Contact Grid */
+        /* About & Contact Tab */
         .about-text {
             text-align: center;
             font-size: 0.95rem;
@@ -213,7 +213,7 @@
         .social-btn.x:hover { background: #000; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); }
         .social-btn.tiktok:hover { background: #000; color: #00f2fe; box-shadow: 0 8px 16px rgba(0, 242, 254, 0.3); }
 
-        /* Gallery Grid (Portfolio Showcase) */
+        /* Gallery Grid (Character Design & Concept Art) */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -265,7 +265,7 @@
             color: #3d3b62;
         }
 
-        /* Keyframes */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -276,7 +276,7 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Mobile Responsive */
+        /* Responsive Layout */
         @media (max-width: 600px) {
             .portfolio-card { padding: 25px 20px; }
             .social-grid { grid-template-columns: 1fr; }
@@ -286,17 +286,17 @@
 </head>
 <body>
 
-    <!-- 3D Canvas Container -->
+    <!-- Three.js Background Canvas -->
     <div id="webgl-container"></div>
 
-    <!-- UI Overlay -->
+    <!-- Main UI Container -->
     <div class="ui-container">
         <div class="portfolio-card">
             
-            <!-- Header Profile -->
+            <!-- Header Profile Section -->
             <div class="header-section">
                 <div class="avatar-box">
-                    <i class="fa-solid fa-paintbrush"></i>
+                    <i class="fa-solid fa-palette"></i>
                 </div>
                 <h1>Jaranya Tosanhuan</h1>
                 <div class="pen-name">Glacier Kumu</div>
@@ -305,13 +305,13 @@
 
             <!-- Navigation Tabs -->
             <div class="tabs-nav">
-                <button class="tab-btn active" onclick="switchTab('about')">
+                <button class="tab-btn active" onclick="switchTab(event, 'about')">
                     <i class="fa-solid fa-user"></i> About & Contact
                 </button>
-                <button class="tab-btn" onclick="switchTab('character')">
-                    <i class="fa-solid fa-user-ninja"></i> Character Design
+                <button class="tab-btn" onclick="switchTab(event, 'character')">
+                    <i class="fa-solid fa-paintbrush"></i> Character Design
                 </button>
-                <button class="tab-btn" onclick="switchTab('concept')">
+                <button class="tab-btn" onclick="switchTab(event, 'concept')">
                     <i class="fa-solid fa-mountain-sun"></i> Concept Art
                 </button>
             </div>
@@ -320,7 +320,7 @@
             <div id="about" class="tab-content active">
                 <p class="about-text">
                     ✨ I love Character Design and Concept art. <br>
-                    ยินดีต้อนรับสู่พอร์ตโฟลิโอ 3D สีพาสเทล สามารถเลือกชมผลงานและติดต่องานได้ผ่านช่องทางด้านล่างครับ/ค่ะ
+                    ยินดีต้อนรับสู่พอร์ตโฟลิโอ 3D สีพาสเทล สามารถคลิกเลือกชมผลงานและติดต่อได้ผ่านช่องทางด้านล่างนี้ครับ/ค่ะ
                 </p>
                 <div class="social-grid">
                     <a href="https://www.facebook.com/glacier.kumu/" target="_blank" rel="noopener noreferrer" class="social-btn fb">
@@ -342,15 +342,15 @@
             <div id="character" class="tab-content">
                 <div class="gallery-grid">
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-mask"></i><span>Artwork 01</span></div>
+                        <div class="art-placeholder"><i class="fa-solid fa-user-astronaut"></i><span>Artwork 01</span></div>
                         <div class="art-info"><div class="art-title">Original Character #1</div></div>
                     </div>
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-ghost"></i><span>Artwork 02</span></div>
+                        <div class="art-placeholder"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Artwork 02</span></div>
                         <div class="art-info"><div class="art-title">Original Character #2</div></div>
                     </div>
                     <div class="art-card char">
-                        <div class="art-placeholder"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Artwork 03</span></div>
+                        <div class="art-placeholder"><i class="fa-solid fa-mask"></i><span>Artwork 03</span></div>
                         <div class="art-info"><div class="art-title">Chibi Concept</div></div>
                     </div>
                 </div>
@@ -361,14 +361,14 @@
                 <div class="gallery-grid">
                     <div class="art-card concept">
                         <div class="art-placeholder"><i class="fa-solid fa-cloud-moon"></i><span>Artwork 01</span></div>
-                        <div class="art-info"><div class="art-title">Pastel Fantasy World</div></div>
+                        <div class="art-info"><div class="art-title">Fantasy World Concept</div></div>
                     </div>
                     <div class="art-card concept">
                         <div class="art-placeholder"><i class="fa-solid fa-castle"></i><span>Artwork 02</span></div>
                         <div class="art-info"><div class="art-title">Environment Design</div></div>
                     </div>
                     <div class="art-card concept">
-                        <div class="art-placeholder"><i class="fa-solid fa-tree"></i><span>Artwork 03</span></div>
+                        <div class="art-placeholder"><i class="fa-solid fa-sun-plant-wilt"></i><span>Artwork 03</span></div>
                         <div class="art-info"><div class="art-title">Background Concept</div></div>
                     </div>
                 </div>
@@ -381,26 +381,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // --- 1. TAB SWITCHING SYSTEM ---
-        function switchTab(tabId) {
-            // Hide all tabs
+        // 1. Tab Switching Function
+        function switchTab(e, tabId) {
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            // Remove active style from buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            // Show selected tab & active button
             document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            e.currentTarget.classList.add('active');
         }
 
-        // --- 2. THREE.JS 3D BACKGROUND ---
+        // 2. Three.js Background Setup
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
 
-        // Pastel Fog Background
         scene.fog = new THREE.FogExp2(0xeaf6ff, 0.015);
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -411,7 +407,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        // Lights
+        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
 
@@ -423,7 +419,7 @@
         pinkLight.position.set(10, -10, 10);
         scene.add(pinkLight);
 
-        // Floating Pastel Shapes
+        // Floating Pastel 3D Geometries
         const shapes = [];
         const pastelColors = [0xa8d8ea, 0xfaccff, 0xffd3e2, 0xe0c3fc, 0xc4faf8];
         const geometries = [
@@ -464,7 +460,7 @@
             shapes.push(mesh);
         }
 
-        // Mouse Parallax Movement
+        // Mouse Parallax Effect
         let mouseX = 0;
         let mouseY = 0;
 
@@ -473,7 +469,7 @@
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // Animation Loop
+        // Render Loop
         const clock = new THREE.Clock();
 
         function animate() {
@@ -495,7 +491,7 @@
 
         animate();
 
-        // Resize Listener
+        // Responsive Camera Setup
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
