@@ -1,56 +1,48 @@
+<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom AR Marker with 3D Animation</title>
-    
-    <!-- A-Frame Library -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    
-    <!-- AR.js for A-Frame -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    
-    <!-- A-Frame Extras (ใช้สำหรับจัดการ Animation ของ GLTF/GLB) -->
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR.js 3D Model with Animation</title>
+  
+  <!-- โหลด A-Frame และ AR.js -->
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  
+  <!-- โหลด aframe-extras สำหรับเล่น Animation ของ GLB/GLTF -->
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
 </head>
-<body style="margin: 0px; overflow: hidden;">
 
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        
-        <!-- โหลดไฟล์ 3D Model -->
-        <a-assets>
-            <a-asset-item 
-                id="epona-model" 
-                src="https://sibsansuk.github.io/epona.glb">
-            </a-asset-item>
-        </a-assets>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene 
+    embedded 
+    arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+    renderer="logarithmicDepthBuffer: true; colorManagement: true;">
+    
+    <!-- โหลด Asset โมเดล 3D -->
+    <a-assets>
+      <a-asset-item id="epona-model" src="https://sibsansuk.github.io/epona.glb"></a-asset-item>
+    </a-assets>
 
-        <!-- 
-            Custom Pattern Marker
-            หมายเหตุ: AR.js ต้องใช้ไฟล์รหัสรูปแบบ .patt ในการตรวจจับรูปภาพ tracker.png 
-            หากคุณสร้างไฟล์ tracker.patt แล้ว สามารถอัปโหลดไว้ที่ path เดียวกันและอ้างอิง URL ได้ทันที
-        -->
-        <a-marker type="pattern" url="https://aitutotialcourse.github.io/tracker.patt">
-            
-            <!-- 
-                แสดง 3D Model epona.glb
-                - animation-mixer: เล่นทุก Animation ที่อยู่ในโมเดลแบบวนซ้ำ (loop)
-                - scale / position / rotation: ปรับขนาดและตำแหน่งให้เหมาะสม
-            -->
-            <a-entity 
-                gltf-model="#epona-model" 
-                animation-mixer="clip: *; loop: repeat;" 
-                scale="0.5 0.5 0.5" 
-                position="0 0 0" 
-                rotation="0 0 0">
-            </a-entity>
+    <!-- กำหนด Marker (ใช้ pattern-tracker.patt ที่แปลงมาจาก tracker.png) -->
+    <a-marker type="pattern" url="pattern-tracker.patt">
+      <!-- 
+        แสดงโมเดล 3D
+        - animation-mixer : คำสั่งเล่น animation ( clip: * หมายถึงเล่นทุก animation )
+        - scale : ปรับขนาดโมเดลตามต้องการ
+        - position และ rotation : ปรับตำแหน่งและมุมหมุน
+      -->
+      <a-entity 
+        gltf-model="#epona-model"
+        animation-mixer="clip: *;"
+        scale="0.5 0.5 0.5"
+        position="0 0 0"
+        rotation="0 0 0">
+      </a-entity>
+    </a-marker>
 
-        </a-marker>
-
-        <!-- กล้องสำหรับ AR -->
-        <a-entity camera></a-entity>
-
-    </a-scene>
-
+    <!-- กล้องสำหรับ AR -->
+    <a-entity camera></a-entity>
+  </a-scene>
 </body>
 </html>
