@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -88,12 +87,12 @@
             height: 80px;
             margin: 0 auto 15px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-pink));
+            background: linear-gradient(135deg, #fff3b0, #faccff);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #fff;
+            color: #ff9f1c;
             box-shadow: 0 10px 25px rgba(250, 204, 255, 0.6);
             border: 3px solid #fff;
         }
@@ -242,7 +241,6 @@
             display: block;
         }
 
-        /* Custom Scrollbar */
         .tab-pane::-webkit-scrollbar {
             width: 6px;
         }
@@ -282,7 +280,6 @@
             justify-content: center;
             font-size: 3rem;
             color: rgba(255, 255, 255, 0.9);
-            position: relative;
         }
 
         .art-card.char .art-thumb { background: linear-gradient(135deg, #a8d8ea, #faccff); }
@@ -305,7 +302,6 @@
             color: var(--text-muted);
         }
 
-        /* Keyframe Animations */
         @keyframes slideInLeft {
             from { opacity: 0; transform: translateX(-50px); }
             to { opacity: 1; transform: translateX(0); }
@@ -316,7 +312,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .ui-layout {
                 grid-template-columns: 1fr;
@@ -341,7 +336,7 @@
             <div>
                 <div class="profile-header">
                     <div class="profile-badge">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <i class="fa-solid fa-kiwi-bird"></i>
                     </div>
                     <h1>Jaranya Tosanhuan</h1>
                     <div class="pen-name">Glacier Kumu</div>
@@ -350,7 +345,7 @@
 
                 <p class="bio-desc">
                     ✨ I love Character Design and Concept art.<br>
-                    ยินดีต้อนรับสู่โลกพาสเทล 3D มอนิเตอร์น้องนก Cockatiel ด้านหลังสามารถหันตามเมาส์ได้ครับ!
+                    ยินดีต้อนรับสู่โลกพาสเทล 3D พร้อมน้องนกคอกคาเทลสีเหลืองขยับตามเมาส์ได้ครับ!
                 </p>
 
                 <!-- Tabs Navigation -->
@@ -390,12 +385,8 @@
         <!-- Main Content Area -->
         <div class="main-content">
             
-            <!-- Tab 1: About -->
-            <div id="about" class="tab-pane active">
-                <!-- Blank for full 3D Cockatiel view -->
-            </div>
+            <div id="about" class="tab-pane active"></div>
 
-            <!-- Tab 2: Character Design Showcase -->
             <div id="character" class="tab-pane">
                 <div class="gallery-grid">
                     <div class="art-card char">
@@ -422,7 +413,6 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Concept Art Showcase -->
             <div id="concept" class="tab-pane">
                 <div class="gallery-grid">
                     <div class="art-card concept">
@@ -453,7 +443,7 @@
 
     </div>
 
-    <!-- Three.js & OrbitControls -->
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
@@ -471,42 +461,42 @@
         renderer.shadowMap.enabled = true;
         container.appendChild(renderer.domElement);
 
-        // --- 2. LIGHTING (PASTEL ATMOSPHERE) ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        // --- 2. LIGHTING ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
         scene.add(ambientLight);
 
-        const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.5);
+        const blueLight = new THREE.DirectionalLight(0xa8d8ea, 1.4);
         blueLight.position.set(-10, 12, 10);
         scene.add(blueLight);
 
-        const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.5);
+        const pinkLight = new THREE.DirectionalLight(0xfaccff, 1.4);
         pinkLight.position.set(10, -10, 8);
         scene.add(pinkLight);
 
-        // --- 3. 3D COCKATIEL MASCOT CREATION ---
+        // --- 3. 3D YELLOW COCKATIEL CREATION ---
         const cockatielGroup = new THREE.Group();
 
-        // Pastel Materials
-        const bodyMat = new THREE.MeshPhongMaterial({ color: 0xfff8ee, flatShading: true });
-        const headMat = new THREE.MeshPhongMaterial({ color: 0xffea85, flatShading: true });
-        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xffa3a5, flatShading: true });
-        const beakMat = new THREE.MeshPhongMaterial({ color: 0xd8b4fe, flatShading: true });
-        const eyeMat = new THREE.MeshBasicMaterial({ color: 0x3d3b62 });
-        const wingMat = new THREE.MeshPhongMaterial({ color: 0xa8d8ea, flatShading: true });
-        const tailMat = new THREE.MeshPhongMaterial({ color: 0xfaccff, flatShading: true });
+        // Yellow Pastel Materials (ปรับเป็นโทนเหลืองลูติโน่)
+        const yellowBodyMat = new THREE.MeshPhongMaterial({ color: 0xfff3a0, flatShading: true }); // ตัวสีเหลืองนวล
+        const yellowHeadMat = new THREE.MeshPhongMaterial({ color: 0xffd000, flatShading: true }); // หัวและหงอนสีเหลืองสด
+        const cheekMat = new THREE.MeshPhongMaterial({ color: 0xff6b4a, flatShading: true });      // แก้มส้มป๊อกสดใส
+        const beakMat = new THREE.MeshPhongMaterial({ color: 0xffdfba, flatShading: true });       // ปากสีเนื้อ
+        const eyeMat = new THREE.MeshBasicMaterial({ color: 0x3d3b62 });                          // ตา
+        const wingMat = new THREE.MeshPhongMaterial({ color: 0xfff8c5, flatShading: true });       // ปีกเหลืองอ่อนพาสเทล
+        const tailMat = new THREE.MeshPhongMaterial({ color: 0xffea85, flatShading: true });       // หางสีเหลืองสด
 
         // Body
         const bodyGeom = new THREE.SphereGeometry(1.8, 16, 16);
         bodyGeom.scale(1, 1.3, 0.9);
-        const body = new THREE.Mesh(bodyGeom, bodyMat);
+        const body = new THREE.Mesh(bodyGeom, yellowBodyMat);
         cockatielGroup.add(body);
 
-        // Head Group (for independent rotation)
+        // Head Group
         const headGroup = new THREE.Group();
         headGroup.position.set(0, 2.0, 0.2);
 
         const headGeom = new THREE.SphereGeometry(1.3, 16, 16);
-        const head = new THREE.Mesh(headGeom, headMat);
+        const head = new THREE.Mesh(headGeom, yellowHeadMat);
         headGroup.add(head);
 
         // Beak
@@ -516,17 +506,17 @@
         beak.rotation.x = Math.PI / 3;
         headGroup.add(beak);
 
-        // Crest (Feathers)
+        // Yellow Crest (หงอนสีเหลืองเด่น)
         for (let i = 0; i < 4; i++) {
-            const crestGeom = new THREE.ConeGeometry(0.15, 1.4 - i * 0.2, 4);
-            const crest = new THREE.Mesh(crestGeom, headMat);
+            const crestGeom = new THREE.ConeGeometry(0.15, 1.5 - i * 0.2, 4);
+            const crest = new THREE.Mesh(crestGeom, yellowHeadMat);
             crest.position.set(0, 1.2 + i * 0.15, -i * 0.15);
             crest.rotation.x = -0.2 - i * 0.15;
             headGroup.add(crest);
         }
 
         // Cheeks
-        const cheekGeom = new THREE.CylinderGeometry(0.4, 0.4, 0.08, 12);
+        const cheekGeom = new THREE.CylinderGeometry(0.42, 0.42, 0.08, 12);
         const leftCheek = new THREE.Mesh(cheekGeom, cheekMat);
         leftCheek.position.set(-1.0, -0.2, 0.8);
         leftCheek.rotation.z = Math.PI / 2;
@@ -563,7 +553,7 @@
         cockatielGroup.add(leftWingPivot);
 
         const rightWingPivot = new THREE.Group();
-        rightWingPivot.position.set(1.6, 0.6, 0);
+        rightWingPivot.position.set(1.8, 0.6, 0);
         const rightWing = new THREE.Mesh(wingGeom, wingMat);
         rightWing.position.set(0.2, -1.2, 0);
         rightWing.rotation.z = -0.2;
@@ -587,7 +577,7 @@
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
 
-        const pColors = [new THREE.Color('#a8d8ea'), new THREE.Color('#faccff'), new THREE.Color('#ffd3e2')];
+        const pColors = [new THREE.Color('#a8d8ea'), new THREE.Color('#faccff'), new THREE.Color('#fff3a0')];
 
         for (let i = 0; i < particleCount; i++) {
             positions[i * 3] = (Math.random() - 0.5) * 40;
@@ -628,7 +618,7 @@
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
 
-            // Cockatiel Gentle Floating
+            // Cockatiel Floating Animation
             cockatielGroup.position.y = Math.sin(time * 2) * 0.3;
             cockatielGroup.rotation.y = Math.sin(time * 0.8) * 0.15;
 
@@ -643,7 +633,7 @@
             // Particles Floating
             particleSystem.rotation.y = time * 0.05;
 
-            // Smooth Camera Parallax
+            // Smooth Camera Motion
             camera.position.x += (targetCamX + mouseX * 1.5 - camera.position.x) * 0.05;
             camera.position.y += (-mouseY * 1.5 + 1 - camera.position.y) * 0.05;
             camera.lookAt(1, 0, 0);
@@ -653,7 +643,7 @@
 
         animate();
 
-        // --- 6. TAB SWITCHING LOGIC & CAMERA POSITIONING ---
+        // --- 6. TAB SWITCHING LOGIC ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -661,15 +651,13 @@
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
 
-            // Shift 3D Camera Focus depending on tab
             if (tabId === 'about') {
-                targetCamX = 2; // Focus on Cockatiel
+                targetCamX = 2;
             } else {
-                targetCamX = 6; // Move Cockatiel to side to showcase artwork
+                targetCamX = 6;
             }
         }
 
-        // --- 7. RESPONSIVE LISTENER ---
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
